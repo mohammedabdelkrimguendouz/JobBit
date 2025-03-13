@@ -5,14 +5,34 @@ using JobBit_DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using JobBit.Cloud;
 
 namespace JobBit.Controllers
 {
+
     //[Authorize(Policy = nameof(JobBit_Business.User.enUserPolicy.CompanyPolicy))]
     [Route("api/Companies")]
     [ApiController]
     public class CompaniesController : ControllerBase
-    {
+    { 
+        
+        private readonly CloudinaryService _cloudinaryService;
+
+
+
+
+        public CompaniesController(CloudinaryService cloudinaryService)
+        {
+            _cloudinaryService = cloudinaryService;
+        }
+
+
+
+
+
+
+
+
         [HttpGet("GetAllCompanies", Name = "GetAllCompanies")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -289,7 +309,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult UpdateCompany([FromForm] UpdateCompanyDTO updateCompanyDTO)
+        public async Task<ActionResult> UpdateCompany([FromForm] UpdateCompanyDTO updateCompanyDTO)
         {
             if (updateCompanyDTO == null || updateCompanyDTO.CompanyID < 1)
             {
@@ -374,8 +394,10 @@ namespace JobBit.Controllers
                 if (!FileService.ValidateFile(updateCompanyDTO.Logo, FileService.enFileType.Image, out errorMessage))
                     return BadRequest(new { message = errorMessage });
 
-                LogoPath = FileService.SaveFile(updateCompanyDTO.Logo, PathService.CompaniesLogoFolder);
-                Util.DeleteFile(company.LogoPath ?? "");
+                //LogoPath = FileService.SaveFile(updateCompanyDTO.Logo, PathService.CompaniesLogoFolder);
+                //Util.DeleteFile(company.LogoPath ?? "");
+                await using var stream = updateCompanyDTO.Logo.OpenReadStream();
+                LogoPath = await _cloudinaryService.UploadImageAsync(stream, updateCompanyDTO.Logo.FileName);
                 company.LogoPath = LogoPath;
             }
 

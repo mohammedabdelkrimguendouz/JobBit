@@ -15,6 +15,7 @@ export default function useSkillData() {
   const fetchSkills = async () => {
     try {
       const data = await getAllSkills();
+      console.log("jkgh", data);
       setSkills(data);
     } catch (error) {
       setError(error.message);
@@ -101,11 +102,11 @@ export default function useSkillData() {
                   <ListItemText primary="Delete" />
                 </MenuItem>
 
-                <MenuItem onClick={() => alert(`Details of ${skill.skillName}`)}>
+                <MenuItem onClick={() => alert(`Edit ${wilaya.name}`)}>
                   <ListItemIcon>
                     <VisibilityIcon fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText primary="Details" />
+                  <ListItemText primary="Edit" />
                 </MenuItem>
               </Menu>
             </div>

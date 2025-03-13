@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import Swal from "sweetalert2";
 import { getAllSkillCategories, deleteSkillCategory } from "../../../services/skillCategoryService";
 
@@ -79,20 +79,33 @@ export default function useSkillCategoryData() {
           name: category.name,
           actions: (
             <div>
-              <IconButton
-                size="small"
-                color="primary"
-                onClick={() => alert(`Edit ${category.name}`)}
-              >
-                <EditIcon />
+              <IconButton onClick={(event) => handleOpen(event, category.skillCategoryID)}>
+                <MoreVertIcon />
               </IconButton>
-              <IconButton
-                size="small"
-                color="secondary"
-                onClick={() => handleDelete(category.skillCategoryID)}
+              <Menu
+                anchorEl={anchorEl[category.skillCategoryID]}
+                open={Boolean(anchorEl[category.skillCategoryID])}
+                onClose={() => handleClose(category.skillCategoryID)}
               >
-                <DeleteIcon />
-              </IconButton>
+                <MenuItem
+                  onClick={() => {
+                    handleDelete(category.skillCategoryID);
+                    handleClose(category.skillCategoryID);
+                  }}
+                >
+                  <ListItemIcon>
+                    <DeleteIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Delete" />
+                </MenuItem>
+
+                <MenuItem onClick={() => alert(`Edit ${wilaya.name}`)}>
+                  <ListItemIcon>
+                    <VisibilityIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Edit" />
+                </MenuItem>
+              </Menu>
             </div>
           ),
         }))

@@ -31,7 +31,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult RegisterJobSeeker([FromForm] RegisterJobSeekerDTO registerDTO)
+        public ActionResult  RegisterJobSeeker([FromForm] RegisterJobSeekerDTO registerDTO)
         {
             if (registerDTO == null || string.IsNullOrWhiteSpace(registerDTO.Email) || !Validation.ValidateEmail(registerDTO.Email) ||
                 string.IsNullOrWhiteSpace(registerDTO.Password) || !Validation.ValidatePassword(registerDTO.Password) ||
@@ -94,7 +94,6 @@ namespace JobBit.Controllers
 
             return CreatedAtRoute("GetJobSeekerByID", new { JobSeekerID = jobSeeker.JobSeekerID }, new
             {
-                token = Token,
                 jobSeekerInfo = jobSeeker.alljobseekerInfo
             });
 

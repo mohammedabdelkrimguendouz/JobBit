@@ -5,7 +5,7 @@ export const getAllSkills = async () => {
     const response = await axios.get("http://localhost:5174/api/Skills/GetAllSkills");
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch Wilayas");
+    throw new Error(error.response?.data?.message || "Failed to fetch Skills");
   }
 };
 

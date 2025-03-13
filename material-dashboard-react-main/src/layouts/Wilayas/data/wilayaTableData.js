@@ -15,7 +15,6 @@ export default function useWilayaData() {
   const fetchWilayas = async () => {
     try {
       const data = await getAllWilayas();
-      console.log(data);
       setWilayas(data);
     } catch (error) {
       setError(error.message);
@@ -100,11 +99,11 @@ export default function useWilayaData() {
                   <ListItemText primary="Delete" />
                 </MenuItem>
 
-                <MenuItem onClick={() => alert(`Details of ${wilaya.name}`)}>
+                <MenuItem onClick={() => alert(`Edit ${wilaya.name}`)}>
                   <ListItemIcon>
                     <VisibilityIcon fontSize="small" />
                   </ListItemIcon>
-                  <ListItemText primary="Details" />
+                  <ListItemText primary="Edit" />
                 </MenuItem>
               </Menu>
             </div>

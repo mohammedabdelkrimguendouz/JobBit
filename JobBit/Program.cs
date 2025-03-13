@@ -1,8 +1,9 @@
-
+﻿
 //using System.Text;
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 //using Microsoft.IdentityModel.Tokens;
 //using JobBit.Token;
+using JobBit.Cloud;
 using JobBit_Business;
 using Microsoft.OpenApi.Models;
 
@@ -53,10 +54,11 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "JobBit APIs", Version = "v1" });
 
-   
+
     c.AddServer(new OpenApiServer
     {
-        Url = "https://fc4b-197-207-173-91.ngrok-free.app"
+        //Url = builder.Configuration["Swagger:ServerUrl"]
+        //Url = "https://6c8d257f2c68d7336668a557c1b4c4c7.serveo.net"
     });
 });
 
@@ -65,22 +67,34 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll",
         policy =>
         {
-            policy.AllowAnyOrigin()
+            policy.SetIsOriginAllowed(_ => true)
                   .AllowAnyMethod()
-                  .AllowAnyHeader();
+                  .AllowAnyHeader()
+                  .AllowCredentials();
         });
 });
+
+builder.Services.AddScoped<CloudinaryService>(provider =>
+{
+    var config = provider.GetRequiredService<IConfiguration>();
+    return new CloudinaryService(config);
+});
+
 
 var app = builder.Build();
 
 app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
