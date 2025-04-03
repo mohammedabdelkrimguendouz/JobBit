@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobBit_DataAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b6415d5eff2ce31d2cc065a7869ecaa5bf60ed3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4374e85e3da70cfcdea6fc40274868ac2985ee56")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobBit_DataAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobBit_DataAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
