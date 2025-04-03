@@ -10,6 +10,33 @@ namespace JobBit_Business
 {
     public class Company : User
     {
+        public class AllCompanyInfo
+        {
+            public int CompanyID { get; set; }
+            public WilayaDTO WilayaInfo { get; set; }
+            public string Name { get; set; }
+            public string? Description { get; set; }
+            public string? LogoPath { get; set; }
+            public string Link { get; set; }
+            public string Email { get; set; }
+            public string Phone { get; set; }
+            public bool IsActive { get; set; }
+
+            
+            public AllCompanyInfo(int companyID, WilayaDTO wilayaInfo, string name, string? description, string? logoPath, string link, string email, string phone, bool isActive)
+            {
+                CompanyID = companyID;
+                WilayaInfo = wilayaInfo;
+                Name = name;
+                Description = description;
+                LogoPath = logoPath;
+                Link = link;
+                Email = email;
+                Phone = phone;
+                IsActive = isActive;
+            }
+        }
+
         public enum enMode { AddNew = 0, Update = 1 };
         private enMode Mode = enMode.AddNew;
         public CompanyDTO companyDTO
@@ -17,12 +44,11 @@ namespace JobBit_Business
             get => new CompanyDTO(this.CompanyID, this.UserID, this.WilayaID, this.Name, this.Description, this.LogoPath, this.Link);
         }
 
-        public object allCompanyInfo
+        public AllCompanyInfo allCompanyInfo
         {
-            get => new
-            {
+            get => new AllCompanyInfo(
                 CompanyID,
-                WilayaInfo = WilayaInfo.wilayaDTO,
+                WilayaInfo.wilayaDTO,
                 Name,
                 Description,
                 LogoPath,
@@ -30,7 +56,7 @@ namespace JobBit_Business
                 Email,
                 Phone,
                 IsActive
-            };
+            );
         }
 
         public int CompanyID { get; set; }

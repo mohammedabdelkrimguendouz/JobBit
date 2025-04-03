@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Microsoft.Data.SqlClient;
 
 namespace JobBit_DataAccess
@@ -38,9 +39,9 @@ namespace JobBit_DataAccess
     public class JobListByCategoryDTO
     {
         public string CategoryName { get; set; }
-        public JobListDTO[] jobLists { get; set; }
+        public List<JobListDTO> jobLists { get; set; }
 
-        public JobListByCategoryDTO(string categoryName, JobListDTO[] jobLists)
+        public JobListByCategoryDTO(string categoryName, List<JobListDTO> jobLists)
         {
             CategoryName = categoryName;
             this.jobLists = jobLists;
@@ -214,7 +215,7 @@ namespace JobBit_DataAccess
                 foreach(SkillCategoryDTO skillCategory in skillCategories)
                 {
                     ListJobsByCategory.Add( new JobListByCategoryDTO(
-                        skillCategory.Name,GetJobsByCategory(skillCategory.SkillCategoryID).ToArray())
+                        skillCategory.Name,GetJobsByCategory(skillCategory.SkillCategoryID))
                         );
                 }
                     
@@ -228,10 +229,11 @@ namespace JobBit_DataAccess
             return ListJobsByCategory;
         }
 
-        public static List<JobListDTO> FilterJobs(int[]? WilayaIDs, int[]? SkillIDs,
-      int[]? JobTypeIDs, int[]? JobExperienceIDs)
+        public static List<JobListByCategoryDTO> FilterJobs(List<int>? WilayaIDs, List<int>? SkillIDs,
+     List<int>? JobTypeIDs, List<int>? JobExperienceIDs)
         {
-            List<JobListDTO> ListJobs = new List<JobListDTO>();
+            List<JobListByCategoryDTO> jobCategories = new List<JobListByCategoryDTO>();
+
             try
             {
                 using (SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
@@ -241,29 +243,23 @@ namespace JobBit_DataAccess
                     {
                         Command.CommandType = CommandType.StoredProcedure;
 
-                       
                         Command.Parameters.Add("@SkillIDs", SqlDbType.NVarChar, -1).Value =
-                            (SkillIDs != null && SkillIDs.Length > 0) ? (object)string.Join(",", SkillIDs) : DBNull.Value;
-
+                        SkillIDs != null && SkillIDs.Count > 0 ? (object)string.Join(",", SkillIDs) : DBNull.Value;
                         Command.Parameters.Add("@WilayaIDs", SqlDbType.NVarChar, -1).Value =
-                            (WilayaIDs != null && WilayaIDs.Length > 0) ? (object)string.Join(",", WilayaIDs) : DBNull.Value;
-
+                        WilayaIDs != null && WilayaIDs.Count > 0 ? (object)string.Join(",", WilayaIDs) : DBNull.Value;
                         Command.Parameters.Add("@JobTypeIDs", SqlDbType.NVarChar, -1).Value =
-                            (JobTypeIDs != null && JobTypeIDs.Length > 0) ? (object)string.Join(",", JobTypeIDs) : DBNull.Value;
-
+                        JobTypeIDs != null && JobTypeIDs.Count > 0 ? (object)string.Join(",", JobTypeIDs) : DBNull.Value;
                         Command.Parameters.Add("@JobExperienceIDs", SqlDbType.NVarChar, -1).Value =
-                            (JobExperienceIDs != null && JobExperienceIDs.Length > 0) ? (object)string.Join(",", JobExperienceIDs) : DBNull.Value;
-
-                       
-                       
+                        JobExperienceIDs != null && JobExperienceIDs.Count > 0 ? (object)string.Join(",", JobExperienceIDs) : DBNull.Value;
                         using (SqlDataReader Reader = Command.ExecuteReader())
                         {
+                            Dictionary<string, List<JobListDTO>> categoryDictionary = new Dictionary<string, List<JobListDTO>>();
+
                             while (Reader.Read())
                             {
-                               
+                                string categoryName = Reader.GetString(Reader.GetOrdinal("CategoryName"));
 
-                                ListJobs.Add(new JobListDTO
-                                (
+                                JobListDTO job = new JobListDTO(
                                     Reader.GetInt32(Reader.GetOrdinal("JobID")),
                                     Reader.GetString(Reader.GetOrdinal("Title")),
                                     Reader.GetInt32(Reader.GetOrdinal("CompanyID")),
@@ -272,7 +268,20 @@ namespace JobBit_DataAccess
                                     Reader.GetString(Reader.GetOrdinal("CompanyName")),
                                     Reader.IsDBNull(Reader.GetOrdinal("LogoPath")) ? null : Reader.GetString(Reader.GetOrdinal("LogoPath")),
                                     JobSkillData.GetAllSkillsForJob(Reader.GetInt32(Reader.GetOrdinal("JobID"))).ToArray()
-                                ));
+                                );
+
+                                if (!categoryDictionary.ContainsKey(categoryName))
+                                {
+                                    categoryDictionary[categoryName] = new List<JobListDTO>();
+                                }
+
+                                categoryDictionary[categoryName].Add(job);
+                            }
+
+                   
+                            foreach (var category in categoryDictionary)
+                            {
+                                jobCategories.Add(new JobListByCategoryDTO(category.Key, category.Value));
                             }
                         }
                     }
@@ -283,7 +292,7 @@ namespace JobBit_DataAccess
                 clsEventLogData.WriteEvent($" Message : {Ex.Message} \n\n Source : {Ex.Source} \n\n Target Site :  {Ex.TargetSite} \n\n Stack Trace :  {Ex.StackTrace}", EventLogEntryType.Error);
             }
 
-            return ListJobs;
+            return jobCategories;
         }
 
 

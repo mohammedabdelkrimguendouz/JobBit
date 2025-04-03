@@ -2,6 +2,6 @@
 {
     public class SkillListDTO
     {
-        public int[]? Skils { get; set; }
+        public List<int>? Skils { get; set; }
     }
 }

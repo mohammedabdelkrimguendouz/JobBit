@@ -41,7 +41,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetSkillByID(int SkillID)
+        public ActionResult<Skill.AllSkillInfo> GetSkillByID(int SkillID)
         {
             if (SkillID < 1)
                 return BadRequest(new { message = "Invalid Skill ID", SkillID });
@@ -60,7 +60,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetSkillByName(string SkillName)
+        public ActionResult<Skill.AllSkillInfo> GetSkillByName(string SkillName)
         {
             if (string.IsNullOrWhiteSpace(SkillName))
                 return BadRequest(new { message = "Invalid Skill name" });
@@ -139,7 +139,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
 
-        public ActionResult<SkillDTO> AddSkill(SkillDTO NewSkillDTO)
+        public ActionResult<Skill.AllSkillInfo> AddSkill(SkillDTO NewSkillDTO)
         {
             if (NewSkillDTO == null || string.IsNullOrWhiteSpace(NewSkillDTO.Name) || NewSkillDTO.SkillCategoryID<1)
                 return BadRequest(new { message = "Invalid Skill Data !" });
@@ -172,7 +172,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
 
-        public ActionResult<SkillDTO> UpdateSkill(SkillDTO UpdateSkillDTO)
+        public ActionResult<Skill.AllSkillInfo> UpdateSkill(SkillDTO UpdateSkillDTO)
         {
             if (UpdateSkillDTO == null || UpdateSkillDTO.SkillID < 1 || string.IsNullOrWhiteSpace(UpdateSkillDTO.Name) || 
                 UpdateSkillDTO.SkillCategoryID<1)

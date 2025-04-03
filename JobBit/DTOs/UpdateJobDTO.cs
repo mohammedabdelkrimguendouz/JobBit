@@ -11,6 +11,6 @@ namespace JobBit.DTOs
         public Job.enJopType JobType { get; set; }
         public Job.enJobExperience Experience { get; set; }
         public string? Description { get; set; }
-        public int[] Skils { get; set; }
+        public List<int> Skils { get; set; }
     }
 }

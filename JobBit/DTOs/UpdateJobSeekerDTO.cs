@@ -16,6 +16,6 @@ namespace JobBit.DTOs
         public IFormFile? CV { get; set; }
         public string? LinkProfileLinkden { get; set; }
         public string? LinkProfileGithub { get; set; }
-        public int[]? Skills { get; set; }
+        public List<int>? Skills { get; set; }
     }
 }

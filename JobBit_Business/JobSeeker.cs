@@ -11,6 +11,47 @@ namespace JobBit_Business
 {
     public class JobSeeker : User
     {
+        public class AllJobSeekerInfo
+        {
+            public int JobSeekerID { get; set; }
+            public WilayaDTO WilayaInfo { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public DateTime? DateOfBirth { get; set; }
+            public string Gender { get; set; }
+            public string ProfilePicturePath { get; set; }
+            public string CvFilePath { get; set; }
+            public string LinkProfileLinkden { get; set; }
+            public string LinkProfileGithub { get; set; }
+            public string Email { get; set; }
+            public string Phone { get; set; }
+            public bool IsActive { get; set; }
+            public List<SkillDTO> Skills { get; set; }
+
+            // Constructor to initialize the properties
+            public AllJobSeekerInfo(
+                int jobSeekerID, WilayaDTO wilayaInfo, string firstName, string lastName,
+                DateTime? dateOfBirth, string gender, string profilePicturePath, string cvFilePath,
+                string linkProfileLinkden, string linkProfileGithub, string email, string phone,
+                bool isActive, List<SkillDTO> skills)
+            {
+                JobSeekerID = jobSeekerID;
+                WilayaInfo = wilayaInfo;
+                FirstName = firstName;
+                LastName = lastName;
+                DateOfBirth = dateOfBirth;
+                Gender = gender;
+                ProfilePicturePath = profilePicturePath;
+                CvFilePath = cvFilePath;
+                LinkProfileLinkden = linkProfileLinkden;
+                LinkProfileGithub = linkProfileGithub;
+                Email = email;
+                Phone = phone;
+                IsActive = isActive;
+                Skills = skills;
+            }
+        }
+
         public enum enMode { AddNew = 0, Update = 1 };
         private enMode Mode = enMode.AddNew;
         public enum enGender { Male =0,Female =1};
@@ -19,16 +60,15 @@ namespace JobBit_Business
             get => new JobSeekerDTO(this.JobSeekerID, this.UserID, this.WilayaID, this.FirstName, this.LastName, this.DateOfBirth, (byte)this.Gender, this.ProfilePicturePath, this.CvFilePath, this.LinkProfileLinkden, this.LinkProfileGithub);
         }
 
-        public object alljobseekerInfo
+        public AllJobSeekerInfo alljobseekerInfo
         {
-            get => new
-            {
+            get => new AllJobSeekerInfo(
                 JobSeekerID,
-                WilayaInfo = (WilayaInfo!=null)?WilayaInfo.wilayaDTO:null,
+                (WilayaInfo != null) ? WilayaInfo.wilayaDTO : null,  
                 FirstName,
                 LastName,
                 DateOfBirth,
-                Gender,
+                Gender.ToString(),
                 ProfilePicturePath,
                 CvFilePath,
                 LinkProfileLinkden,
@@ -36,9 +76,10 @@ namespace JobBit_Business
                 Email,
                 Phone,
                 IsActive,
-                skills =  GetAllSkillsForJobSeeker(this.JobSeekerID).ToArray(),
-            };
+                GetAllSkillsForJobSeeker(this.JobSeekerID)  
+            );
         }
+
         public int JobSeekerID { get; set; }
         public int? WilayaID { get; set; }
         public Wilaya WilayaInfo;

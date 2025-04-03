@@ -31,7 +31,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult  RegisterJobSeeker([FromForm] RegisterJobSeekerDTO registerDTO)
+        public ActionResult<JobSeeker.AllJobSeekerInfo>  RegisterJobSeeker([FromForm] RegisterJobSeekerDTO registerDTO)
         {
             if (registerDTO == null || string.IsNullOrWhiteSpace(registerDTO.Email) || !Validation.ValidateEmail(registerDTO.Email) ||
                 string.IsNullOrWhiteSpace(registerDTO.Password) || !Validation.ValidatePassword(registerDTO.Password) ||
@@ -92,10 +92,7 @@ namespace JobBit.Controllers
 
             string Token = GenerateJwtToken(jobSeeker.UserID,JobBit_Business.User.enUserType.JobSeeker);
 
-            return CreatedAtRoute("GetJobSeekerByID", new { JobSeekerID = jobSeeker.JobSeekerID }, new
-            {
-                jobSeekerInfo = jobSeeker.alljobseekerInfo
-            });
+            return CreatedAtRoute("GetJobSeekerByID", new { JobSeekerID = jobSeeker.JobSeekerID }, jobSeeker.alljobseekerInfo);
 
            
         }
@@ -104,7 +101,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult RegisterCompany( RegisterCompanyDTO registerDTO)
+        public ActionResult<Company.AllCompanyInfo> RegisterCompany( RegisterCompanyDTO registerDTO)
         {
             if (registerDTO == null || string.IsNullOrWhiteSpace(registerDTO.Email) || !Validation.ValidateEmail(registerDTO.Email) ||
                 string.IsNullOrWhiteSpace(registerDTO.Password) || !Validation.ValidatePassword(registerDTO.Password) ||
@@ -148,11 +145,7 @@ namespace JobBit.Controllers
 
             string Token = GenerateJwtToken(Company.UserID, JobBit_Business.User.enUserType.Company);
 
-            return CreatedAtRoute("GetCompanyByID", new { CompanyID = Company.CompanyID }, new
-            {
-                token = Token,
-                companyInfo = Company.allCompanyInfo
-            });
+            return CreatedAtRoute("GetCompanyByID", new { CompanyID = Company.CompanyID }, Company.allCompanyInfo);
 
         }
 
@@ -163,7 +156,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public IActionResult LogInJobSeeker( LogInDTO loginDTO)
+        public ActionResult<ResultJobSeekerAuth> LogInJobSeeker( LogInDTO loginDTO)
         {
             if (loginDTO == null || string.IsNullOrEmpty(loginDTO.Email) || string.IsNullOrEmpty(loginDTO.Password))
                 return BadRequest("Invalide Data : ");
@@ -183,11 +176,9 @@ namespace JobBit.Controllers
 
             var Token = GenerateJwtToken(jobSeeker.UserID,JobBit_Business.User.enUserType.JobSeeker);
 
-            return Ok(new
-            {
-                token = Token,
-                jobSeekerInfo = jobSeeker.alljobseekerInfo
-            });
+            ResultJobSeekerAuth resultJobSeekerAuth = new ResultJobSeekerAuth(Token, jobSeeker.alljobseekerInfo);
+
+            return Ok(resultJobSeekerAuth);
 
         }
 
@@ -197,7 +188,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public IActionResult LogInCompany( LogInDTO loginDTO)
+        public ActionResult<ResultCompanyAuth> LogInCompany( LogInDTO loginDTO)
         {
             if (loginDTO == null || string.IsNullOrEmpty(loginDTO.Email) || string.IsNullOrEmpty(loginDTO.Password))
                 return BadRequest("Invalide Data : ");
@@ -217,13 +208,13 @@ namespace JobBit.Controllers
 
             var Token = GenerateJwtToken(comapny.UserID, JobBit_Business.User.enUserType.Company);
 
-            return Ok(new
-            {
-                token = Token,
-                comapnyInfo = comapny.allCompanyInfo
-            });
+
+            ResultCompanyAuth resultCompanyAuth = new ResultCompanyAuth(Token, comapny.allCompanyInfo);
+
+            return Ok(resultCompanyAuth);
 
         }
+
 
 
         [HttpPost("LogInUser", Name = "LogInUser")]
@@ -265,7 +256,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public IActionResult EmailVerification(EmailDTO emailDTO)
+        public ActionResult<ResultEmailVerification> EmailVerification(EmailDTO emailDTO)
         {
             if (emailDTO == null || string.IsNullOrEmpty(emailDTO.Email) ||! Validation.ValidateEmail(emailDTO.Email))
                 return BadRequest("Invalide Data : ");
@@ -276,10 +267,11 @@ namespace JobBit.Controllers
             Contact.SendEmail(emailDTO.Email, "our OTP Code for Verification",
                 $"Hello,\r\n\r\nWe received a request to verify your identity for our programming job platform.\r\n\r\nYour One-Time Password (OTP) is:\r\n\r\n********************\r\n       {OTPCode}\r\n********************\r\n\r\nPlease enter this code to complete the verification process.\r\n\r\nIf you didn’t request this, please ignore this email or contact our support team.\r\n\r\nBest regards,");
 
+            ResultEmailVerification resultEmailVerification = new ResultEmailVerification(OTPCode);
 
-          
-            
-            return Ok(new {Code = OTPCode});
+
+
+            return Ok(resultEmailVerification);
         }
 
 

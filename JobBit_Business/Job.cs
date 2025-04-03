@@ -4,12 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JobBit_DataAccess;
+using static JobBit_Business.Company;
 using static JobBit_DataAccess.JobSkillData;
 
 namespace JobBit_Business
 {
     public class Job
     {
+        public class AllJobInfoDTO
+        {
+            public int JobID { get; set; }
+            public AllCompanyInfo ComapnyInfo { get; set; }
+            public string JobType { get; set; }
+            public DateTime PostedDate { get; set; }
+            public string Experience { get; set; }
+            public bool Available { get; set; }
+            public string Title { get; set; }
+            public string? Description { get; set; }
+            public List<SkillDTO> Skills { get; set; }
+
+            public AllJobInfoDTO(int jobID, AllCompanyInfo comapnyInfo, string jobType, DateTime postedDate, string experience, bool available, string title, string? description, List<SkillDTO> skills)
+            {
+                JobID = jobID;
+                ComapnyInfo = comapnyInfo;
+                JobType = jobType;
+                PostedDate = postedDate;
+                Experience = experience;
+                Available = available;
+                Title = title;
+                Description = description;
+                Skills = skills;
+            }
+        }
+
         public enum enMode { AddNew = 0, Update = 1 };
         public enum enJopType {Remote, OnSite,  Hybrid };
         public enum enJobExperience { Beginner, Junior, Senior, Expert }
@@ -19,21 +46,21 @@ namespace JobBit_Business
             get => new JobDTO(this.JobID, this.CompanyID, (byte)this.JobType, this.PostedDate, (byte)this.Experience, this.Available, this.Description,this.Title);
         }
 
-        public object allJobInfoDTO
+        public AllJobInfoDTO allJobInfoDTO
         {
-            get => new
-            {
+            get => new AllJobInfoDTO(
                 JobID,
-                ComapnyInfo = ComapnyInfo.allCompanyInfo,
-                JobType,
+                ComapnyInfo.allCompanyInfo, 
+                JobType.ToString(),
                 PostedDate,
-                Experience,
+                Experience.ToString(),
                 Available,
                 Title,
                 Description,
-                Skills = GetAllSkillsForJob()
-            };
+                GetAllSkillsForJob()
+            );
         }
+
 
         public int JobID { get; set; }
         public int CompanyID { get; set; }
@@ -124,8 +151,8 @@ namespace JobBit_Business
         //}
 
 
-        public static List<JobListDTO> FilterJobs(int[]? WilayaIDs, int[]? SkillIDs,
-            int[]? JobTypeIDs, int[]? JobExperienceIDs)
+        public static List<JobListByCategoryDTO> FilterJobs(List<int>? WilayaIDs, List<int>? SkillIDs,
+            List<int>? JobTypeIDs, List<int>? JobExperienceIDs)
         {
             return JobData.FilterJobs(WilayaIDs,SkillIDs,JobTypeIDs,JobExperienceIDs);
         }

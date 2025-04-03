@@ -52,7 +52,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetCompanyByID(int CompanyID)
+        public ActionResult<Company.AllCompanyInfo> GetCompanyByID(int CompanyID)
         {
             if (CompanyID < 1)
                 return BadRequest(new { message = "Invalid Company ID", CompanyID });
@@ -69,7 +69,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetCompanyByUserID(int UserID)
+        public ActionResult<Company.AllCompanyInfo> GetCompanyByUserID(int UserID)
         {
             if (UserID < 1)
                 return BadRequest(new { message = "Invalid User ID", UserID });
@@ -87,7 +87,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetCompanyByEmail(string Email)
+        public ActionResult<Company.AllCompanyInfo> GetCompanyByEmail(string Email)
         {
             if (string.IsNullOrWhiteSpace(Email) || ! Validation.ValidateEmail(Email))
                 return BadRequest(new { message = "Invalid Company Email" });
@@ -106,7 +106,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetCompanyByEmailAndPassword(LogInDTO logIn)
+        public ActionResult<Company.AllCompanyInfo> GetCompanyByEmailAndPassword(LogInDTO logIn)
         {
             if (string.IsNullOrWhiteSpace(logIn.Email) || !Validation.ValidateEmail(logIn.Email) || !Validation.ValidatePassword(logIn.Password))
                 return BadRequest(new { message = "Invalid Company Data" });
@@ -254,7 +254,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddCompany(RegisterCompanyDTO registerCompanyDTO)
+        public ActionResult<Company.AllCompanyInfo> AddCompany(RegisterCompanyDTO registerCompanyDTO)
         {
             if (registerCompanyDTO == null || string.IsNullOrWhiteSpace(registerCompanyDTO.Email) || !Validation.ValidateEmail(registerCompanyDTO.Email) ||
                 string.IsNullOrWhiteSpace(registerCompanyDTO.Password) || !Validation.ValidatePassword(registerCompanyDTO.Password) ||
@@ -309,7 +309,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> UpdateCompany([FromForm] UpdateCompanyDTO updateCompanyDTO)
+        public async Task<ActionResult<Company.AllCompanyInfo>> UpdateCompany([FromForm] UpdateCompanyDTO updateCompanyDTO)
         {
             if (updateCompanyDTO == null || updateCompanyDTO.CompanyID < 1)
             {
@@ -421,7 +421,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> UploadCompanyLogo(int companyID, [FromForm] IFormFile logo)
+        public async Task<ActionResult> UploadCompanyLogo(int companyID,  IFormFile logo)
         {
             if (companyID < 1 || logo == null)
             {
@@ -488,7 +488,7 @@ namespace JobBit.Controllers
             if (!company.Save())
                 return StatusCode(409, "Error updating Password");
 
-            return Ok(new { message = "Company Update Password Secssefully", changePassowrdDTO.ID });
+            return Ok(new { message = "Company Update Password Secssefully" });
 
         }
 

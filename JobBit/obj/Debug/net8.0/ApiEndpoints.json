@@ -15,8 +15,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit.DTOs.ResultEmailVerification",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -65,8 +69,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit.DTOs.ResultCompanyAuth",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -115,8 +123,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit.DTOs.ResultJobSeekerAuth",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -215,8 +227,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Company\u002BAllCompanyInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -291,8 +307,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.JobSeeker\u002BAllJobSeekerInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -332,8 +352,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Company\u002BAllCompanyInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -503,8 +527,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Company\u002BAllCompanyInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -544,8 +572,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Company\u002BAllCompanyInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -585,8 +617,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Company\u002BAllCompanyInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -626,8 +662,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Company\u002BAllCompanyInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -948,8 +988,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Company\u002BAllCompanyInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -1020,6 +1064,52 @@
     "EndpointName": "UpdateCompanyActivityStatus"
   },
   {
+    "ContainingType": "JobBit.Controllers.CompaniesController",
+    "Method": "UploadCompanyLogo",
+    "RelativePath": "api/Companies/UploadCompanyLogo{companyID}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "companyID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "logo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 409
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "EndpointName": "UploadCompanyLogo"
+  },
+  {
     "ContainingType": "JobBit.Controllers.jobsController",
     "Method": "AddJob",
     "RelativePath": "api/jobs/AddJob",
@@ -1035,8 +1125,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Job\u002BAllJobInfoDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 201
       },
       {
@@ -1085,8 +1179,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_DataAccess.RequestDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 201
       },
       {
@@ -1233,44 +1331,20 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "WilayaIDs",
-        "Type": "System.Int32[]",
-        "IsRequired": false
-      },
-      {
-        "Name": "SkillIDs",
-        "Type": "System.Int32[]",
-        "IsRequired": false
-      },
-      {
-        "Name": "JobTypeIDs",
-        "Type": "System.Int32[]",
-        "IsRequired": false
-      },
-      {
-        "Name": "JobExperienceIDs",
-        "Type": "System.Int32[]",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "JobBit.DTOs.FilterJobsDTO",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[JobBit_DataAccess.JobListDTO, JobBit_DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[JobBit_DataAccess.JobListByCategoryDTO, JobBit_DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
       }
     ],
     "EndpointName": "FilterJobs"
@@ -1322,15 +1396,6 @@
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
       }
     ],
     "EndpointName": "GetAllJobs"
@@ -1412,6 +1477,27 @@
   },
   {
     "ContainingType": "JobBit.Controllers.jobsController",
+    "Method": "GetItemFilterJobs",
+    "RelativePath": "api/jobs/GetItemFilterJobs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[JobBit.DTOs.ItemFilterJobs, JobBit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetItemFilterJobs"
+  },
+  {
+    "ContainingType": "JobBit.Controllers.jobsController",
     "Method": "GetJobByID",
     "RelativePath": "api/jobs/GetJobByID/{JobID}",
     "HttpMethod": "GET",
@@ -1426,8 +1512,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Job\u002BAllJobInfoDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -1554,8 +1644,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Job\u002BAllJobInfoDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 201
       },
       {
@@ -1694,8 +1788,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.JobSeeker\u002BAllJobSeekerInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -1988,8 +2086,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.JobSeeker\u002BAllJobSeekerInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -2029,8 +2131,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.JobSeeker\u002BAllJobSeekerInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -2070,8 +2176,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.JobSeeker\u002BAllJobSeekerInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -2111,8 +2221,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.JobSeeker\u002BAllJobSeekerInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -2452,14 +2566,18 @@
       },
       {
         "Name": "Skills",
-        "Type": "System.Int32[]",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.JobSeeker\u002BAllJobSeekerInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -2528,6 +2646,98 @@
       }
     ],
     "EndpointName": "UpdateJobSeekerActivityStatus"
+  },
+  {
+    "ContainingType": "JobBit.Controllers.JobSeekersController",
+    "Method": "UploadJobSeekerCV",
+    "RelativePath": "api/JobSeekers/UploadJobSeekerCV{jobSeekerID}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "jobSeekerID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "cvFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 409
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "EndpointName": "UploadJobSeekerCV"
+  },
+  {
+    "ContainingType": "JobBit.Controllers.JobSeekersController",
+    "Method": "UploadJobSeekerImage",
+    "RelativePath": "api/JobSeekers/UploadJobSeekerImage{jobSeekerID}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "jobSeekerID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "profileImage",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 409
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "EndpointName": "UploadJobSeekerImage"
   },
   {
     "ContainingType": "JobBit.Controllers.SkillCategoriesController",
@@ -2887,7 +3097,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "JobBit_DataAccess.SkillDTO",
+        "Type": "JobBit_Business.Skill\u002BAllSkillInfo",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -3048,8 +3258,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Skill\u002BAllSkillInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -3089,8 +3303,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_Business.Skill\u002BAllSkillInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {
@@ -3212,7 +3430,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "JobBit_DataAccess.SkillDTO",
+        "Type": "JobBit_Business.Skill\u002BAllSkillInfo",
         "MediaTypes": [
           "text/plain",
           "application/json",

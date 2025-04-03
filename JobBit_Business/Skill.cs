@@ -9,22 +9,39 @@ namespace JobBit_Business
 {
     public class Skill
     {
+        public class AllSkillInfo
+        {
+            public int SkillID { get; set; }
+            public string Name { get; set; }
+            public string? IconUrl { get; set; }
+            public SkillCategoryDTO SkillCategoryInfo { get; set; }
+
+           
+            public AllSkillInfo(int skillID, string name, string? iconUrl, SkillCategoryDTO skillCategoryInfo)
+            {
+                SkillID = skillID;
+                Name = name;
+                IconUrl = iconUrl;
+                SkillCategoryInfo = skillCategoryInfo;
+            }
+        }
+
         public enum enMode { AddNew = 0, Update = 1 };
         private enMode Mode = enMode.AddNew;
         public SkillDTO skillDTO
         {
             get => new SkillDTO(this.SkillID, this.SkillCategoryID, this.Name,this.IconUrl);
         }
-        public object allSkillInfo
+        public AllSkillInfo allSkillInfo
         {
-            get => new
-            {
+            get => new AllSkillInfo(
                 SkillID,
                 Name,
                 IconUrl,
-                SkillCategoryInfo = SkillCategoryInfo.skillcategoryDTO
-            };
+                SkillCategoryInfo.skillcategoryDTO
+            );
         }
+
 
         public string? IconUrl { get; set; }
         public int SkillID { get; set; }

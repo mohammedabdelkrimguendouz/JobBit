@@ -15,35 +15,61 @@ namespace JobBit.Controllers
 
         [HttpGet("GetAllJobs", Name = "GetAllJobs")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<JobListByCategoryDTO>> GetAllJobs()
         {
             List<JobListByCategoryDTO> JobsList = Job.GetAllJobs();
-
-            if (JobsList.Count == 0)
-                return NotFound(new { message = "No Jobs found" });
-
             return Ok(JobsList);
         }
 
+        [HttpGet("GetItemFilterJobs", Name = "GetItemFilterJobs")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<ItemFilterJobs>> GetItemFilterJobs()
+        {
+            List<ItemFilterJobs> itemFilterJobs = new List<ItemFilterJobs>();
+
+            itemFilterJobs.Add(new ItemFilterJobs("by job type",
+    Util.GetEnumList<Job.enJopType>()
+    .Prepend(new EnumDto { Id = 0, Name = "All" })
+    .ToList()
+));
+
+            itemFilterJobs.Add(new ItemFilterJobs("by level of experience",
+                Util.GetEnumList<Job.enJobExperience>()
+                .Prepend(new EnumDto { Id = 0, Name = "All" })
+                .ToList()
+            ));
+
+            itemFilterJobs.Add(new ItemFilterJobs("by wilaya",
+                Wilaya.GetAllWilayas()
+                .Select(x => new EnumDto { Id = x.WilayaID, Name = x.Name })
+                .Prepend(new EnumDto { Id = 0, Name = "All" })
+                .ToList()
+            ));
+
+            itemFilterJobs.Add(new ItemFilterJobs("by technology",
+                Skill.GetAllSkills()
+                .Select(x => new EnumDto { Id = x.SkillID, Name = x.SkillName })
+                .Prepend(new EnumDto { Id = 0, Name = "All" })
+                .ToList()
+            ));
+
+
+            return Ok(itemFilterJobs);
+        }
 
 
 
         [HttpGet("FilterJobs", Name = "FilterJobs")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<JobListDTO>> FilterJobs( [FromQuery] FilterJobsDTO filterJobsDTO)
+        public ActionResult<IEnumerable<JobListByCategoryDTO>> FilterJobs(FilterJobsDTO request)
         {
-            List<JobListDTO> JobsList = Job.FilterJobs(filterJobsDTO.WilayaIDs,filterJobsDTO.SkillIDs,
-                filterJobsDTO.JobTypeIDs,filterJobsDTO.JobExperienceIDs
-                );
-
-            if (JobsList.Count == 0)
-                return NotFound(new { message = "No Jobs found" });
-
-            return Ok(JobsList);
+            List<JobListByCategoryDTO> filteredJobs = JobData.FilterJobs(request.WilayaIDs, request.SkillIDs, request.JobTypeIDs, request.JobExperienceIDs);
+            return Ok(filteredJobs);
         }
 
+
+
+        
 
 
 
@@ -146,7 +172,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetJobByID(int JobID)
+        public ActionResult<Job.AllJobInfoDTO> GetJobByID(int JobID)
         {
             if (JobID < 1)
                 return BadRequest(new { message = "Invalid Job ID", JobID });
@@ -239,7 +265,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult AddJob(NewJobDTO NewJobDTO)
+        public ActionResult<Job.AllJobInfoDTO> AddJob(NewJobDTO NewJobDTO)
         {
             if (NewJobDTO == null  || NewJobDTO.CompanyID<1 && !Enum.IsDefined(typeof(Job.enJopType), (int)NewJobDTO.JobType) ||
                 !Enum.IsDefined(typeof(Job.enJopType),(int)NewJobDTO.Experience) || NewJobDTO.Skils == null
@@ -283,7 +309,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult ApplayForJob(ApplayForJobDTO requestDTO)
+        public ActionResult<RequestDTO> ApplayForJob(ApplayForJobDTO requestDTO)
         {
             if (requestDTO == null || requestDTO.JobID < 1 || requestDTO.JobSeekerID < 1)
 
@@ -327,7 +353,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public ActionResult UpdateJob(UpdateJobDTO UpdateJobDTO)
+        public ActionResult<Job.AllJobInfoDTO> UpdateJob(UpdateJobDTO UpdateJobDTO)
         {
             if (UpdateJobDTO == null || UpdateJobDTO.JobID < 1 && !Enum.IsDefined(typeof(Job.enJopType), (int)UpdateJobDTO.JobType) ||
                 !Enum.IsDefined(typeof(Job.enJopType), (int)UpdateJobDTO.Experience) || UpdateJobDTO.Skils == null || 

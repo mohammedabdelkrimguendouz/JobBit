@@ -10,5 +10,9 @@
             this.title = title;
             this.filters = filters;
         }
+        public ItemFilterJobs()
+        {
+            
+        }
     }
 }

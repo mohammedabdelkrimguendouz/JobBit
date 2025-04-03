@@ -5,6 +5,7 @@ using JobBit_DataAccess;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static JobBit_DataAccess.UserData;
+using JobBit.Cloud;
 
 
 namespace JobBit.Controllers
@@ -32,7 +33,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetJobSeekerByID(int JobSeekerID)
+        public ActionResult<JobSeeker.AllJobSeekerInfo> GetJobSeekerByID(int JobSeekerID)
         {
             if (JobSeekerID < 1)
                 return BadRequest(new { message = "Invalid JobSeeker ID", JobSeekerID });
@@ -49,7 +50,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetJobSeekerByUserID(int UserID)
+        public ActionResult<JobSeeker.AllJobSeekerInfo> GetJobSeekerByUserID(int UserID)
         {
             if (UserID < 1)
                 return BadRequest(new { message = "Invalid User ID", UserID });
@@ -67,7 +68,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetJobSeekerByEmail(string Email)
+        public ActionResult<JobSeeker.AllJobSeekerInfo> GetJobSeekerByEmail(string Email)
         {
             if (string.IsNullOrWhiteSpace(Email) || !Validation.ValidateEmail(Email))
                 return BadRequest(new { message = "Invalid JobSeeker Email" });
@@ -86,7 +87,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult GetJobSeekerByEmailAndPassword(LogInDTO logInDTO)
+        public ActionResult<JobSeeker.AllJobSeekerInfo> GetJobSeekerByEmailAndPassword(LogInDTO logInDTO)
         {
             if (string.IsNullOrWhiteSpace(logInDTO.Email) || !Validation.ValidateEmail(logInDTO.Email) || 
                 !Validation.ValidatePassword(logInDTO.Password))
@@ -235,7 +236,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddJobSeeker([FromForm] RegisterJobSeekerDTO registerJobSeekerDTO)
+        public ActionResult<JobSeeker.AllJobSeekerInfo> AddJobSeeker([FromForm] RegisterJobSeekerDTO registerJobSeekerDTO)
         {
             if (registerJobSeekerDTO == null || string.IsNullOrWhiteSpace(registerJobSeekerDTO.Email) || !Validation.ValidateEmail(registerJobSeekerDTO.Email) ||
                 string.IsNullOrWhiteSpace(registerJobSeekerDTO.Password) || !Validation.ValidatePassword(registerJobSeekerDTO.Password) ||
@@ -304,7 +305,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult UpdateJobSeeker([FromForm] UpdateJobSeekerDTO updateJobSeekerDTO)
+        public ActionResult<JobSeeker.AllJobSeekerInfo> UpdateJobSeeker([FromForm] UpdateJobSeekerDTO updateJobSeekerDTO)
         {
             if (updateJobSeekerDTO == null || updateJobSeekerDTO.JobSeekerID < 1 )
             {
@@ -430,6 +431,71 @@ namespace JobBit.Controllers
 
 
 
+        [HttpPut("UploadJobSeekerImage{jobSeekerID}", Name = "UploadJobSeekerImage")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> UploadJobSeekerImage( int jobSeekerID,  IFormFile profileImage)
+        {
+            if (jobSeekerID < 1 || profileImage == null)
+            {
+                return BadRequest(new { message = "Invalid request. JobSeekerID and Profile Image are required." });
+            }
+
+            JobSeeker jobSeeker = JobSeeker.FindByJobSeeker(jobSeekerID);
+            if (jobSeeker == null)
+                return NotFound(new { message = "JobSeeker not found", jobSeekerID });
+
+           
+            string? errorMessage = "";
+            string? ProfileImagePath = jobSeeker.ProfilePicturePath;
+           
+                if (!FileService.ValidateFile(profileImage, FileService.enFileType.Image, out errorMessage))
+                    return BadRequest(new { message = errorMessage });
+
+                ProfileImagePath = FileService.SaveFile(profileImage, PathService.ProfileImagesFolder);
+                Util.DeleteFile(jobSeeker.ProfilePicturePath ?? "");
+                jobSeeker.ProfilePicturePath = ProfileImagePath;
+           
+            if (!jobSeeker.Save())
+                return StatusCode(409, "Error updating JobSeeker Image");
+
+            return Ok(new { message = "Profile image uploaded successfully" });
+        }
+
+        [HttpPut("UploadJobSeekerCV{jobSeekerID}", Name = "UploadJobSeekerCV")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> UploadJobSeekerCV( int jobSeekerID,  IFormFile cvFile)
+        {
+            if (jobSeekerID < 1 || cvFile == null)
+            {
+                return BadRequest(new { message = "Invalid request. JobSeekerID and CV file are required." });
+            }
+
+            JobSeeker jobSeeker = JobSeeker.FindByJobSeeker(jobSeekerID);
+            if (jobSeeker == null)
+                return NotFound(new { message = "JobSeeker not found", jobSeekerID });
+
+           
+            string? CvPath = jobSeeker.CvFilePath;
+            string errorMessage = "";
+            
+                if (!FileService.ValidateFile(cvFile, FileService.enFileType.CV, out errorMessage))
+                    return BadRequest(new { message = errorMessage });
+
+                CvPath = FileService.SaveFile(cvFile, PathService.CVsFolder);
+                Util.DeleteFile(jobSeeker.CvFilePath ?? "");
+                jobSeeker.CvFilePath = CvPath;
+            
+            if (!jobSeeker.Save())
+                return StatusCode(409, "Error updating JobSeeker CV");
+
+            return Ok(new { message = "CV uploaded successfully" });
+        }
+
+
 
         [HttpPut("ChangeJobSeekerPassowrd", Name = "ChangeJobSeekerPassowrd")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -463,7 +529,7 @@ namespace JobBit.Controllers
             if (!jobSeeker.Save())
                 return StatusCode(409, "Error updating Password");
 
-            return Ok(new { message = "JobSeeker Update Password Secssefully", changePassowrdDTO.ID });
+            return Ok(new { message = "JobSeeker Update Password Secssefully" });
 
         }
 

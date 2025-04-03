@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (13-03-2025)\\JobBit\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (13-03-2025)\\jobbit\\controllers\\jobseekerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|solutionrelative:controllers\\jobseekerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (13-03-2025)\\jobbit\\controllers\\companiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|solutionrelative:controllers\\companiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "JobSeekersController.cs",
+              "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (13-03-2025)\\JobBit\\Controllers\\JobSeekersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\JobSeekersController.cs",
+              "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (13-03-2025)\\JobBit\\Controllers\\JobSeekersController.cs",
+              "RelativeToolTip": "Controllers\\JobSeekersController.cs",
+              "ViewState": "AgIAALQBAAAAAAAAAAAAAMABAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T20:36:32.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "CompaniesController.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (13-03-2025)\\JobBit\\Controllers\\CompaniesController.cs",
               "RelativeDocumentMoniker": "Controllers\\CompaniesController.cs",
               "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (13-03-2025)\\JobBit\\Controllers\\CompaniesController.cs",
               "RelativeToolTip": "Controllers\\CompaniesController.cs",
-              "ViewState": "AgIAAJ0BAAAAAAAAAAAAAJ0BAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAKEBAAAAAAAAAAAAAMIBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T19:13:17.486Z",
+              "WhenOpened": "2025-04-03T20:35:25.704Z",
               "EditorCaption": ""
             }
           ]
