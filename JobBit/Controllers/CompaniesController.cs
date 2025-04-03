@@ -417,6 +417,39 @@ namespace JobBit.Controllers
 
 
 
+        [HttpPut("UploadCompanyLogo{companyID}", Name = "UploadCompanyLogo")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> UploadCompanyLogo(int companyID, [FromForm] IFormFile logo)
+        {
+            if (companyID < 1 || logo == null)
+            {
+                return BadRequest(new { message = "Invalid request. CompanyID and Logo are required." });
+            }
+
+            Company company = Company.FindByCompanyID(companyID);
+            if (company == null)
+                return NotFound(new { message = "Company not found", companyID });
+
+           
+            string? errorMessage = "";
+            if (!FileService.ValidateFile(logo, FileService.enFileType.Image, out errorMessage))
+                return BadRequest(new { message = errorMessage });
+
+           
+            await using var stream = logo.OpenReadStream();
+            string newLogoPath = await _cloudinaryService.UploadImageAsync(stream, logo.FileName);
+
+            
+            company.LogoPath = newLogoPath;
+            if (!company.Save())
+                return StatusCode(409, "Error updating Company Logo");
+
+            return Ok(new { message = "Logo uploaded successfully", logoUrl = newLogoPath });
+        }
+
+
         [HttpPut("ChangeCompanyPassowrd", Name = "ChangeCompanyPassowrd")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -446,7 +479,11 @@ namespace JobBit.Controllers
 
             string NewPasswordHahed = Cryptography.ComputeHash(changePassowrdDTO.NewPassword);
 
+
+
             company.Password = NewPasswordHahed;
+
+
 
             if (!company.Save())
                 return StatusCode(409, "Error updating Password");
