@@ -29,27 +29,27 @@ namespace JobBit.Controllers
 
             itemFilterJobs.Add(new ItemFilterJobs("by job type",
     Util.GetEnumList<Job.enJopType>()
-    .Prepend(new EnumDto { Id = 0, Name = "All" })
+    .Prepend(new EnumDto { Id = -1, Name = "All" })
     .ToList()
 ));
 
             itemFilterJobs.Add(new ItemFilterJobs("by level of experience",
                 Util.GetEnumList<Job.enJobExperience>()
-                .Prepend(new EnumDto { Id = 0, Name = "All" })
+                .Prepend(new EnumDto { Id = -1, Name = "All" })
                 .ToList()
             ));
 
             itemFilterJobs.Add(new ItemFilterJobs("by wilaya",
                 Wilaya.GetAllWilayas()
                 .Select(x => new EnumDto { Id = x.WilayaID, Name = x.Name })
-                .Prepend(new EnumDto { Id = 0, Name = "All" })
+                .Prepend(new EnumDto { Id = -1, Name = "All" })
                 .ToList()
             ));
 
             itemFilterJobs.Add(new ItemFilterJobs("by technology",
                 Skill.GetAllSkills()
                 .Select(x => new EnumDto { Id = x.SkillID, Name = x.SkillName })
-                .Prepend(new EnumDto { Id = 0, Name = "All" })
+                .Prepend(new EnumDto { Id = -1, Name = "All" })
                 .ToList()
             ));
 
