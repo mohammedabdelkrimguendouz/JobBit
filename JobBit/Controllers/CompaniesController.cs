@@ -46,6 +46,17 @@ namespace JobBit.Controllers
             return Ok(CompaniesList);
         }
 
+        [HttpGet("GetAllApplicantsForCompanyJob/{CompanyID}", Name = "GetAllApplicantsForCompanyJob")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<ApplicantForCompanyJobDTO>> GetAllApplicantsForCompanyJob(int CompanyID)
+        {
+            List<ApplicantForCompanyJobDTO> applicantForCompanyJobDTO = Company.GetAllApplicantsForCompanyJob(CompanyID);
+
+           
+
+            return Ok(applicantForCompanyJobDTO);
+        }
+
 
 
         [HttpGet("GetCompanyByID/{CompanyID}", Name = "GetCompanyByID")]

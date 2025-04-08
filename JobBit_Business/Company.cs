@@ -222,5 +222,14 @@ namespace JobBit_Business
             return JobData.GetAllJobsForCompany(CompanyID);
         }
 
+        public static List<ApplicantForCompanyJobDTO> GetAllApplicantsForCompanyJob(int CompanyID)
+        {
+            return Request.GetAllApplicantsForCompanyJob(CompanyID);
+        }
+        public  List<ApplicantForCompanyJobDTO> GetAllApplicantsForCompanyJob()
+        {
+            return Request.GetAllApplicantsForCompanyJob(this.CompanyID);
+        }
+
     }
 }

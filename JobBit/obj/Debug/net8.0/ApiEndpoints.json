@@ -483,6 +483,33 @@
   },
   {
     "ContainingType": "JobBit.Controllers.CompaniesController",
+    "Method": "GetAllApplicantsForCompanyJob",
+    "RelativePath": "api/Companies/GetAllApplicantsForCompanyJob/{CompanyID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CompanyID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[JobBit_DataAccess.ApplicantForCompanyJobDTO, JobBit_DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetAllApplicantsForCompanyJob"
+  },
+  {
+    "ContainingType": "JobBit.Controllers.CompaniesController",
     "Method": "GetAllCompanies",
     "RelativePath": "api/Companies/GetAllCompanies",
     "HttpMethod": "GET",

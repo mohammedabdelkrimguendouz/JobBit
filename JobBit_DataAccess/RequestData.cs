@@ -28,9 +28,88 @@ namespace JobBit_DataAccess
         }
 
     }
+
+    public class ApplicantForCompanyJobDTO
+    {
+        public int CompanyID { get; set; }
+        public int JobID { get; set; }
+        public int JobSeekerID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string? WilayaName { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public byte Gender { get; set; }
+        public string? LinkProfileLinkden { get; set; }
+        public string? LinkProfileGithub { get; set; }
+        public DateTime RequestDate { get; set; }
+
+        public ApplicantForCompanyJobDTO(int companyID, int jobID, int jobSeekerID, string firstName, string lastName,
+                              string? wilayaName, DateTime? dateOfBirth, byte gender,
+                              string? linkProfileLinkden, string? linkProfileGithub, DateTime requestDate)
+        {
+            CompanyID = companyID;
+            JobID = jobID;
+            JobSeekerID = jobSeekerID;
+            FirstName = firstName;
+            LastName = lastName;
+            WilayaName = wilayaName;
+            DateOfBirth = dateOfBirth;
+            Gender = gender;
+            LinkProfileLinkden = linkProfileLinkden;
+            LinkProfileGithub = linkProfileGithub;
+            RequestDate = requestDate;
+        }
+    }
+
     public class RequestData
     {
+        public static List<ApplicantForCompanyJobDTO> GetAllApplicantsForCompanyJob(int CompanyID)
+        {
+            List<ApplicantForCompanyJobDTO> applicantForCompanyJob = new List<ApplicantForCompanyJobDTO>();
+            try
+            {
+                using (SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    Connection.Open();
+                    using (SqlCommand Command = new SqlCommand("SP_GetAllApplicantsForCompanyJob", Connection))
+                    {
+                        Command.CommandType = CommandType.StoredProcedure;
+                        Command.Parameters.AddWithValue("@CompanyID", CompanyID);
+                        using (SqlDataReader Reader = Command.ExecuteReader())
+                        {
+                            while (Reader.Read())
+                            {
+                                applicantForCompanyJob.Add(
+                                    new ApplicantForCompanyJobDTO(
+                                        Reader.GetInt32(Reader.GetOrdinal("CompanyID")),
+Reader.GetInt32(Reader.GetOrdinal("JobID")),
+Reader.GetInt32(Reader.GetOrdinal("JobSeekerID")),
+Reader.GetString(Reader.GetOrdinal("FirstName")),
+Reader.GetString(Reader.GetOrdinal("LastName")),
+Reader.IsDBNull(Reader.GetOrdinal("WilayaName")) ? null : Reader.GetString(Reader.GetOrdinal("WilayaName")),
+Reader.IsDBNull(Reader.GetOrdinal("DateOfBirth")) ? null : Reader.GetDateTime(Reader.GetOrdinal("DateOfBirth")),
+Reader.GetByte(Reader.GetOrdinal("Gender")),
+Reader.IsDBNull(Reader.GetOrdinal("LinkProfileLinkden")) ? null : Reader.GetString(Reader.GetOrdinal("LinkProfileLinkden")),
+Reader.IsDBNull(Reader.GetOrdinal("LinkProfileGithub")) ? null : Reader.GetString(Reader.GetOrdinal("LinkProfileGithub")),
+Reader.GetDateTime(Reader.GetOrdinal("RequestDate"))
+)
+                                 );
+                                    
+                               
 
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                clsEventLogData.WriteEvent($" Message : {Ex.Message} \n\n Source : {Ex.Source} \n\n Target Site :  {Ex.TargetSite} \n\n Stack Trace :  {Ex.StackTrace}", EventLogEntryType.Error);
+                
+            }
+            return applicantForCompanyJob;
+
+        }
         public static int AddNewRequest(RequestDTO requestDTO)
         {
             int RequestID = -1;

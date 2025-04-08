@@ -711,6 +711,56 @@
         }
       }
     },
+    "/api/Companies/GetAllApplicantsForCompanyJob/{CompanyID}": {
+      "get": {
+        "tags": [
+          "Companies"
+        ],
+        "operationId": "GetAllApplicantsForCompanyJob",
+        "parameters": [
+          {
+            "name": "CompanyID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicantForCompanyJobDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicantForCompanyJobDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicantForCompanyJobDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Companies/GetCompanyByID/{CompanyID}": {
       "get": {
         "tags": [
@@ -7060,6 +7110,57 @@
           "jobSeekerID": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApplicantForCompanyJobDTO": {
+        "type": "object",
+        "properties": {
+          "companyID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jobID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jobSeekerID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "wilayaName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "gender": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "linkProfileLinkden": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkProfileGithub": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestDate": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

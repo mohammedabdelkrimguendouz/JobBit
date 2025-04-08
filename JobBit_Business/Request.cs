@@ -87,6 +87,10 @@ namespace JobBit_Business
         {
             return RequestData.GetAllRequests();
         }
+        public static List<ApplicantForCompanyJobDTO> GetAllApplicantsForCompanyJob(int CompanyID)
+        {
+            return RequestData.GetAllApplicantsForCompanyJob(CompanyID);
+        }
 
         public static bool IsRequestExist(int RequestID)
         {
