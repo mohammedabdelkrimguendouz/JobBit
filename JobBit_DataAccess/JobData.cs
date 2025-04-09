@@ -61,10 +61,10 @@ namespace JobBit_DataAccess
        
         public string? LogoPath {  get; set; }
 
-        public SkillDTO[] skills { get; set; }
+        public List<SkillDTO> skills { get; set; }
 
 
-        public JobListDTO(int jobID, string title, int companyID, DateTime postedDate, string wilayaName, string companyName, string? logoPath, SkillDTO[] skills)
+        public JobListDTO(int jobID, string title, int companyID, DateTime postedDate, string wilayaName, string companyName, string? logoPath, List<SkillDTO> skills)
         {
             JobID = jobID;
             Title = title;
@@ -267,7 +267,7 @@ namespace JobBit_DataAccess
                                     Reader.GetString(Reader.GetOrdinal("WilayaName")),
                                     Reader.GetString(Reader.GetOrdinal("CompanyName")),
                                     Reader.IsDBNull(Reader.GetOrdinal("LogoPath")) ? null : Reader.GetString(Reader.GetOrdinal("LogoPath")),
-                                    JobSkillData.GetAllSkillsForJob(Reader.GetInt32(Reader.GetOrdinal("JobID"))).ToArray()
+                                    JobSkillData.GetAllSkillsForJob(Reader.GetInt32(Reader.GetOrdinal("JobID")))
                                 );
 
                                 if (!categoryDictionary.ContainsKey(categoryName))
@@ -419,7 +419,7 @@ Reader.GetDateTime(Reader.GetOrdinal("PostedDate")),
 Reader.GetString(Reader.GetOrdinal("WilayaName")),
 Reader.GetString(Reader.GetOrdinal("CompanyName")),
 Reader.IsDBNull(Reader.GetOrdinal("LogoPath")) ? null : Reader.GetString(Reader.GetOrdinal("LogoPath")),
-JobSkillData.GetAllSkillsForJob(Reader.GetInt32(Reader.GetOrdinal("JobID"))).ToArray()
+JobSkillData.GetAllSkillsForJob(Reader.GetInt32(Reader.GetOrdinal("JobID")))
                                       )
                                    );
                             }

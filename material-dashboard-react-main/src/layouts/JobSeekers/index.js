@@ -1,25 +1,170 @@
-import { useState, useMemo } from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import TextField from "@mui/material/TextField";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import { useState, useEffect, useMemo } from "react";
+import {
+  Grid,
+  Card,
+  TextField,
+  Tabs,
+  Tab,
+  Menu,
+  MenuItem,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import { motion } from "framer-motion";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Swal from "sweetalert2";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DataTable from "examples/Tables/DataTable";
-import jobSeekersTableData from "layouts/JobSeekers/data/jobSeekersTableData";
+import MDBadge from "components/MDBadge";
+
+import {
+  getAllJobSeekers,
+  deleteJobSeeker,
+  updateJobSeekerActivityStatus,
+} from "../../services/JobSeekerService";
 
 function JobSeekers() {
-  const { columns, rows } = jobSeekersTableData();
-
-  // State for filters
+  const [jobSeekers, setJobSeekers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [anchorEl, setAnchorEl] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
-  // تصفية البيانات بناءً على البحث وحالة الحساب
+  const fetchJobSeekers = async () => {
+    try {
+      const data = await getAllJobSeekers();
+      setJobSeekers(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobSeekers();
+  }, []);
+
+  const toggleActiveStatus = async (id, currentStatus) => {
+    try {
+      await updateJobSeekerActivityStatus(id, !currentStatus);
+      setLoading(true);
+      await fetchJobSeekers();
+    } catch (error) {}
+  };
+
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deleteJobSeeker(id);
+        setLoading(true);
+        await fetchJobSeekers();
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Job Seeker has been deleted.",
+          icon: "success",
+          timer: 1500,
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete the Job Seeker.",
+          icon: "error",
+        });
+      }
+    }
+  };
+
+  const handleOpen = (event, id) => setAnchorEl((prev) => ({ ...prev, [id]: event.currentTarget }));
+  const handleClose = (id) => setAnchorEl((prev) => ({ ...prev, [id]: null }));
+
+  const columns = [
+    { Header: "Name", accessor: "name", width: "30%", align: "left" },
+    { Header: "Email", accessor: "email", align: "left" },
+    { Header: "Gender", accessor: "gender", align: "center" },
+    { Header: "Active", accessor: "active", align: "center" },
+    { Header: "Action", accessor: "action", align: "center" },
+  ];
+
+  const rows = jobSeekers.map((jobSeeker) => ({
+    name: jobSeeker.firstName + " " + jobSeeker.lastName,
+    email: jobSeeker.email,
+    gender: jobSeeker.gender === 0 ? "Male" : "Female",
+    isActiveBoolean: Boolean(jobSeeker.isActive),
+    active: (
+      <MDBox ml={-1}>
+        <MDBadge
+          badgeContent={jobSeeker.isActive ? "YES" : "NO"}
+          color={jobSeeker.isActive ? "success" : "error"}
+          variant="gradient"
+          size="sm"
+        />
+      </MDBox>
+    ),
+    action: (
+      <div>
+        <IconButton onClick={(event) => handleOpen(event, jobSeeker.jobSeekerID)}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl[jobSeeker.jobSeekerID]}
+          open={Boolean(anchorEl[jobSeeker.jobSeekerID])}
+          onClose={() => handleClose(jobSeeker.jobSeekerID)}
+        >
+          <MenuItem
+            onClick={() => {
+              toggleActiveStatus(jobSeeker.jobSeekerID, jobSeeker.isActive);
+              handleClose(jobSeeker.jobSeekerID);
+            }}
+          >
+            <ListItemIcon>
+              <PowerSettingsNewIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary={jobSeeker.isActive ? "Deactivate" : "Activate"} />
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => {
+              handleDelete(jobSeeker.jobSeekerID);
+              handleClose(jobSeeker.jobSeekerID);
+            }}
+          >
+            <ListItemIcon>
+              <DeleteIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Delete" />
+          </MenuItem>
+
+          <MenuItem onClick={() => alert(`Details of ${jobSeeker.firstName}`)}>
+            <ListItemIcon>
+              <VisibilityIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Details" />
+          </MenuItem>
+        </Menu>
+      </div>
+    ),
+  }));
+
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {
       const matchesName = row.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -34,7 +179,6 @@ function JobSeekers() {
     });
   }, [searchTerm, statusFilter, rows]);
 
-  // إعداد أنيميشن الظهور التدريجي
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
@@ -43,9 +187,7 @@ function JobSeekers() {
   return (
     <DashboardLayout>
       <MDBox pt={6} pb={3}>
-        {/* Filters Section */}
         <Grid container spacing={3} justifyContent="center">
-          {/* Search Filter */}
           <Grid item xs={12} md={6}>
             <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
               <TextField
@@ -64,7 +206,6 @@ function JobSeekers() {
             </motion.div>
           </Grid>
 
-          {/* Status Filter using Tabs */}
           <Grid item xs={12} md={6}>
             <motion.div
               initial="hidden"
@@ -88,7 +229,6 @@ function JobSeekers() {
           </Grid>
         </Grid>
 
-        {/* Table Section */}
         <Grid container spacing={3} mt={3}>
           <Grid item xs={12}>
             <motion.div

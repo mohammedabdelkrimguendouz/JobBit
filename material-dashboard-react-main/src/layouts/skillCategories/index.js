@@ -1,32 +1,154 @@
-import { useState, useMemo } from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import TextField from "@mui/material/TextField";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+// SkillCategories.jsx
+import { useState, useEffect, useMemo } from "react";
+import {
+  Grid,
+  Card,
+  TextField,
+  Menu,
+  MenuItem,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { motion } from "framer-motion";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import Swal from "sweetalert2";
+
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DataTable from "examples/Tables/DataTable";
 
-// Data
-import skillCategoriesTableData from "layouts/skillCategories/data/skillCategoriesTableData";
+import {
+  getAllSkillCategories,
+  deleteSkillCategory,
+  addSkillCategory,
+  updateSkillCategory,
+} from "../../services/skillCategoryService";
 
 function SkillCategories() {
-  const { columns, rows } = skillCategoriesTableData();
-
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [anchorEl, setAnchorEl] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
 
-  const filteredRows = useMemo(() => {
-    return rows.filter((row) => {
-      const matchesName = row.name.toLowerCase().includes(searchTerm.toLowerCase());
+  const [openDialog, setOpenDialog] = useState(false);
+  const [form, setForm] = useState({ id: null, name: "" });
 
-      return matchesName;
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const data = await getAllSkillCategories();
+      setCategories(data);
+    } catch (err) {
+      setError("Failed to fetch categories.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
     });
-  }, [searchTerm, statusFilter, rows]);
+
+    if (result.isConfirmed) {
+      try {
+        await deleteSkillCategory(id);
+        fetchCategories();
+        Swal.fire("Deleted!", "Skill Category has been deleted.", "success");
+      } catch (err) {
+        Swal.fire("Error", "Failed to delete the category", "error");
+      }
+    }
+  };
+
+  const handleOpen = (event, id) => setAnchorEl((prev) => ({ ...prev, [id]: event.currentTarget }));
+  const handleClose = (id) => setAnchorEl((prev) => ({ ...prev, [id]: null }));
+
+  const handleOpenDialog = (category = null) => {
+    if (category) setForm({ id: category.skillCategoryID, name: category.name });
+    else setForm({ id: null, name: "" });
+    setOpenDialog(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      if (form.id) await updateSkillCategory(form.id, form.name);
+      else await addSkillCategory(form.name);
+      fetchCategories();
+      setOpenDialog(false);
+    } catch (err) {
+      Swal.fire("Error", "Failed to save category", "error");
+    }
+  };
+
+  const columns = [
+    { Header: "ID", accessor: "id", align: "center" },
+    { Header: "Name", accessor: "name", align: "left" },
+    { Header: "Actions", accessor: "actions", align: "center" },
+  ];
+
+  const rows = useMemo(() => {
+    return categories
+      .filter((row) => row.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      .map((category) => ({
+        id: category.skillCategoryID,
+        name: category.name,
+        actions: (
+          <div>
+            <IconButton onClick={(event) => handleOpen(event, category.skillCategoryID)}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl[category.skillCategoryID]}
+              open={Boolean(anchorEl[category.skillCategoryID])}
+              onClose={() => handleClose(category.skillCategoryID)}
+            >
+              <MenuItem
+                onClick={() => {
+                  handleDelete(category.skillCategoryID);
+                  handleClose(category.skillCategoryID);
+                }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Delete" />
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleOpenDialog(category);
+                  handleClose(category.skillCategoryID);
+                }}
+              >
+                <ListItemIcon>
+                  <VisibilityIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Edit" />
+              </MenuItem>
+            </Menu>
+          </div>
+        ),
+      }));
+  }, [categories, searchTerm, anchorEl]);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -36,9 +158,7 @@ function SkillCategories() {
   return (
     <DashboardLayout>
       <MDBox pt={6} pb={3}>
-        {/* Filters Section */}
         <Grid container spacing={3} justifyContent="center">
-          {/* Search Filter */}
           <Grid item xs={12} md={6}>
             <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
               <TextField
@@ -56,19 +176,13 @@ function SkillCategories() {
               />
             </motion.div>
           </Grid>
-
-          {/* Status Filter using Tabs */}
-          <Grid item xs={12} md={6}>
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeInUp}
-              transition={{ delay: 0.2 }}
-            ></motion.div>
+          <Grid item xs={12} md={6} display="flex" justifyContent="flex-end">
+            <Button variant="contained" color="success" onClick={() => handleOpenDialog()}>
+              + Add Skill Category
+            </Button>
           </Grid>
         </Grid>
 
-        {/* Table Section */}
         <Grid container spacing={3} mt={3}>
           <Grid item xs={12}>
             <motion.div
@@ -89,12 +203,12 @@ function SkillCategories() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Skill Categories ({filteredRows.length})
+                    Skill Categories ({rows.length})
                   </MDTypography>
                 </MDBox>
                 <MDBox pt={3}>
                   <DataTable
-                    table={{ columns, rows: filteredRows }}
+                    table={{ columns, rows }}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
@@ -105,6 +219,25 @@ function SkillCategories() {
             </motion.div>
           </Grid>
         </Grid>
+
+        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+          <DialogTitle>{form.id ? "Edit Skill Category" : "Add Skill Category"}</DialogTitle>
+          <DialogContent>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Category Name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+            <Button onClick={handleSave} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
       </MDBox>
     </DashboardLayout>
   );

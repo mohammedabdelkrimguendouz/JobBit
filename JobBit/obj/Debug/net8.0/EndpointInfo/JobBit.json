@@ -7654,6 +7654,10 @@
           "skillName": {
             "type": "string",
             "nullable": true
+          },
+          "iconUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

@@ -31,12 +31,14 @@ namespace JobBit_DataAccess
         public int SkillID { get; set; }
         public string CategoryName { get; set; }
         public string SkillName { get; set; }
+        public string? IconUrl { get; set; }
 
-        public SkillsListDTO(int skillID, string categoryName, string skillName)
+        public SkillsListDTO(int skillID, string categoryName, string skillName, string? iconUrl)
         {
             SkillID = skillID;
             CategoryName = categoryName;
             SkillName = skillName;
+            IconUrl = iconUrl;
         }
     }
     public class SkillData
@@ -175,7 +177,8 @@ namespace JobBit_DataAccess
                                       (
                                          Reader.GetInt32(Reader.GetOrdinal("SkillID")),
 Reader.GetString(Reader.GetOrdinal("CategoryName")),
-Reader.GetString(Reader.GetOrdinal("SkillName"))
+Reader.GetString(Reader.GetOrdinal("SkillName")),
+Reader.IsDBNull(Reader.GetOrdinal("IconUrl")) ? null : Reader.GetString(Reader.GetOrdinal("IconUrl"))
                                       )
                                    );
                             }

@@ -1,26 +1,172 @@
-import { useState, useMemo } from "react";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import TextField from "@mui/material/TextField";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { motion } from "framer-motion";
+import { useState, useEffect, useMemo } from "react";
+import {
+  Menu,
+  MenuItem,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Grid,
+  Card,
+  TextField,
+  Tabs,
+  Tab,
+} from "@mui/material";
 
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
+import { motion } from "framer-motion";
 import MDBox from "components/MDBox";
+import MDBadge from "components/MDBadge";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DataTable from "examples/Tables/DataTable";
+import Swal from "sweetalert2";
 
-// Data
-import companiesTableData from "layouts/Companies/data/companiesTableData";
+import {
+  getAllCompanies,
+  deleteCompany,
+  updateCompanyActivityStatus,
+} from "../../services/companyService";
 
 function Companies() {
-  const { columns, rows } = companiesTableData();
-
+  const [companies, setCompanies] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [anchorEl, setAnchorEl] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
-  // تصفية البيانات بناءً على البحث وحالة الشركة
+  const fetchCompanies = async () => {
+    try {
+      const data = await getAllCompanies();
+      setCompanies(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const toggleActiveStatus = async (id, currentStatus) => {
+    try {
+      await updateCompanyActivityStatus(id, !currentStatus);
+      setLoading(true);
+      await fetchCompanies();
+    } catch (error) {}
+  };
+
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deleteCompany(id);
+        setLoading(true);
+        await fetchCompanies();
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Company has been deleted.",
+          icon: "success",
+          timer: 1500,
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete the company.",
+          icon: "error",
+        });
+      }
+    }
+  };
+
+  const handleOpen = (event, id) => setAnchorEl((prev) => ({ ...prev, [id]: event.currentTarget }));
+  const handleClose = (id) => setAnchorEl((prev) => ({ ...prev, [id]: null }));
+
+  const columns = [
+    { Header: "Name", accessor: "name", width: "30%", align: "left" },
+    { Header: "Email", accessor: "email", align: "left" },
+    { Header: "Wilaya", accessor: "wilaya", align: "center" },
+    { Header: "Active", accessor: "active", align: "center" },
+    { Header: "Action", accessor: "action", align: "center" },
+  ];
+
+  const rows =
+    companies?.map((company) => ({
+      name: company.companyName,
+      email: company.email,
+      wilaya: company.wilayaName,
+      isActiveBoolean: Boolean(company.isActive),
+      active: (
+        <MDBox ml={-1}>
+          <MDBadge
+            badgeContent={company.isActive ? "YES" : "NO"}
+            color={company.isActive ? "success" : "error"}
+            variant="gradient"
+            size="sm"
+          />
+        </MDBox>
+      ),
+      action: (
+        <div>
+          <IconButton onClick={(event) => handleOpen(event, company.companyID)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl[company.companyID]}
+            open={Boolean(anchorEl[company.companyID])}
+            onClose={() => handleClose(company.companyID)}
+          >
+            <MenuItem
+              onClick={() => {
+                toggleActiveStatus(company.companyID, company.isActive);
+                handleClose(company.companyID);
+              }}
+            >
+              <ListItemIcon>
+                <PowerSettingsNewIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={company.isActive ? "Deactivate" : "Activate"} />
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                handleDelete(company.companyID);
+                handleClose(company.companyID);
+              }}
+            >
+              <ListItemIcon>
+                <DeleteIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Delete" />
+            </MenuItem>
+
+            <MenuItem onClick={() => alert(`Details of ${company.companyName}`)}>
+              <ListItemIcon>
+                <VisibilityIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Details" />
+            </MenuItem>
+          </Menu>
+        </div>
+      ),
+    })) ?? [];
+
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {
       const matchesName = row.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -35,11 +181,28 @@ function Companies() {
     });
   }, [searchTerm, statusFilter, rows]);
 
-  // إعداد الأنيميشن الافتراضي للعناصر
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
+
+  if (loading)
+    return (
+      <DashboardLayout>
+        <MDBox pt={6} pb={3}>
+          Loading...
+        </MDBox>
+      </DashboardLayout>
+    );
+
+  if (error)
+    return (
+      <DashboardLayout>
+        <MDBox pt={6} pb={3}>
+          Error: {error}
+        </MDBox>
+      </DashboardLayout>
+    );
 
   return (
     <DashboardLayout>

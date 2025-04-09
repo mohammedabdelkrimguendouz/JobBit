@@ -21,3 +21,37 @@ export const deleteSkillCategory = async (SkillCategoryID) => {
     throw error;
   }
 };
+
+export const addSkillCategory = async (name) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5174/api/SkillCategories/AddSkillCategory",
+      {
+        Name: name,
+        skillCategoryID: -1,
+      }
+    );
+    if (response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateSkillCategory = async (iD, name) => {
+  try {
+    const response = await axios.put(
+      "http://localhost:5174/api/SkillCategories/updateSkillCategory",
+      {
+        skillCategoryID: iD,
+        Name: name,
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
