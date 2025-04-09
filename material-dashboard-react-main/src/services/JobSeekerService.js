@@ -30,3 +30,23 @@ export const updateJobSeekerActivityStatus = async (jobSeekerID, newStatus) => {
     throw error;
   }
 };
+
+export const getJobSeekerById = async (JobSeekerID) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:5174/api/JobSeekers/GetJobSeekerByID/${JobSeekerID}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const getProfilePicture = (jobSeekerId) => {
+  try {
+    return axios.get(`http://localhost:5174/api/JobSeekers/GetProfilePicture/${jobSeekerId}`, {
+      responseType: "blob",
+    });
+  } catch (error) {
+    throw error;
+  }
+};

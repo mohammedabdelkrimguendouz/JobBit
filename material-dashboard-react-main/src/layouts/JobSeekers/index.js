@@ -10,9 +10,11 @@ import {
   IconButton,
   ListItemIcon,
   ListItemText,
+  Dialog,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import JobSeekerDetails from "../JobSeekers/components/JobSeekerDetails";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -28,6 +30,7 @@ import {
   getAllJobSeekers,
   deleteJobSeeker,
   updateJobSeekerActivityStatus,
+  getJobSeekerById,
 } from "../../services/JobSeekerService";
 
 function JobSeekers() {
@@ -37,6 +40,23 @@ function JobSeekers() {
   const [anchorEl, setAnchorEl] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedJobSeeker, setSelectedJobSeeker] = useState(null);
+  const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
+
+  const handleShowDetails = async (jobSeekerID) => {
+    try {
+      const data = await getJobSeekerById(jobSeekerID);
+      setSelectedJobSeeker(data);
+      setDetailsModalOpen(true);
+    } catch (error) {
+      console.error("Failed to load job seeker details", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to load job seeker details",
+        icon: "error",
+      });
+    }
+  };
 
   const fetchJobSeekers = async () => {
     try {
@@ -58,7 +78,9 @@ function JobSeekers() {
       await updateJobSeekerActivityStatus(id, !currentStatus);
       setLoading(true);
       await fetchJobSeekers();
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -106,7 +128,7 @@ function JobSeekers() {
   ];
 
   const rows = jobSeekers.map((jobSeeker) => ({
-    name: jobSeeker.firstName + " " + jobSeeker.lastName,
+    name: `${jobSeeker.firstName} ${jobSeeker.lastName}`,
     email: jobSeeker.email,
     gender: jobSeeker.gender === 0 ? "Male" : "Female",
     isActiveBoolean: Boolean(jobSeeker.isActive),
@@ -154,7 +176,12 @@ function JobSeekers() {
             <ListItemText primary="Delete" />
           </MenuItem>
 
-          <MenuItem onClick={() => alert(`Details of ${jobSeeker.firstName}`)}>
+          <MenuItem
+            onClick={() => {
+              handleShowDetails(jobSeeker.jobSeekerID);
+              handleClose(jobSeeker.jobSeekerID);
+            }}
+          >
             <ListItemIcon>
               <VisibilityIcon fontSize="small" />
             </ListItemIcon>
@@ -258,7 +285,6 @@ function JobSeekers() {
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
-                    noEndBorder
                   />
                 </MDBox>
               </Card>
@@ -266,6 +292,12 @@ function JobSeekers() {
           </Grid>
         </Grid>
       </MDBox>
+
+      <JobSeekerDetails
+        isOpen={isDetailsModalOpen}
+        jobSeeker={selectedJobSeeker}
+        onClose={() => setDetailsModalOpen(false)}
+      />
     </DashboardLayout>
   );
 }

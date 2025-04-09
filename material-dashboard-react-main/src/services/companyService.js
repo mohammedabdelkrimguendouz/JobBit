@@ -30,3 +30,14 @@ export const updateCompanyActivityStatus = async (companyID, newStatus) => {
     throw error;
   }
 };
+
+export const getCompanyByID = async (companyID) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:5174/api/Companies/GetCompanyByID/${companyID}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

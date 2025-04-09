@@ -11,7 +11,8 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
-
+import { Modal, Box } from "@mui/material";
+import CompanyDetails from "../Companies/components/CompanyDetails ";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -29,6 +30,7 @@ import {
   getAllCompanies,
   deleteCompany,
   updateCompanyActivityStatus,
+  getCompanyByID,
 } from "../../services/companyService";
 
 function Companies() {
@@ -38,6 +40,8 @@ function Companies() {
   const [anchorEl, setAnchorEl] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const fetchCompanies = async () => {
     try {
@@ -98,6 +102,21 @@ function Companies() {
   const handleOpen = (event, id) => setAnchorEl((prev) => ({ ...prev, [id]: event.currentTarget }));
   const handleClose = (id) => setAnchorEl((prev) => ({ ...prev, [id]: null }));
 
+  const showCompanyDetails = async (id) => {
+    try {
+      const data = await getCompanyByID(id);
+      setSelectedCompany(data);
+      setOpenModal(true);
+    } catch (error) {
+      console.error("Failed to load company details", error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedCompany(null);
+  };
+
   const columns = [
     { Header: "Name", accessor: "name", width: "30%", align: "left" },
     { Header: "Email", accessor: "email", align: "left" },
@@ -156,7 +175,12 @@ function Companies() {
               <ListItemText primary="Delete" />
             </MenuItem>
 
-            <MenuItem onClick={() => alert(`Details of ${company.companyName}`)}>
+            <MenuItem
+              onClick={() => {
+                showCompanyDetails(company.companyID);
+                handleClose(company.companyID);
+              }}
+            >
               <ListItemIcon>
                 <VisibilityIcon fontSize="small" />
               </ListItemIcon>
@@ -290,6 +314,27 @@ function Companies() {
           </Grid>
         </Grid>
       </MDBox>
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            width: "90%",
+            maxWidth: 600,
+            bgcolor: "background.paper",
+            p: 4,
+            m: "auto",
+            mt: "5%",
+            borderRadius: 2,
+            boxShadow: 24,
+            outline: "none",
+            maxHeight: "90vh",
+            overflowY: "auto",
+          }}
+        >
+          {selectedCompany && (
+            <CompanyDetails company={selectedCompany} onClose={handleCloseModal} />
+          )}
+        </Box>
+      </Modal>
     </DashboardLayout>
   );
 }
