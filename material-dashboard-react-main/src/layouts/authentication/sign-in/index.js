@@ -1,34 +1,65 @@
-import { useState } from "react";
-
-// react-router-dom components
-import { Link } from "react-router-dom";
-
-// @mui material components
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
 
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
-
-// Material Dashboard 2 React components
+// Material Dashboard components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import { loginUser } from "../../../services/userService";
 
-// Authentication layout components
-import BasicLayout from "layouts/authentication/components/BasicLayout";
+// Authentication layout component
+import CleanLayout from "layouts/authentication/components/CleanLayout";
+
+// Auth context
+import { useAuth } from "context/AuthContext";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const auth = useAuth(); // Get the full auth object instead of destructuring
+
+  useEffect(() => {
+    // Check if user is already logged in
+    if (auth.user) {
+      navigate("/dashboard");
+    }
+  }, [auth.user, navigate]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      // Use mock login for now
+      const userData = await loginUser(email, password);
+
+      // Check if auth.login exists before calling it
+      if (typeof auth.login === "function") {
+        auth.login(userData);
+        console.log(localStorage.getItem("user"));
+        console.log(userData);
+        navigate("/dashboard");
+      } else {
+        setError("Authentication system is not available");
+      }
+    } catch (err) {
+      setError("Incorrect Email Or Password");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <BasicLayout image={bgImage}>
+    <CleanLayout image={bgImage}>
       <Card>
         <MDBox
           variant="gradient"
@@ -46,22 +77,41 @@ function Basic() {
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          {error && (
+            <MDTypography variant="body2" color="error" textAlign="center" mb={2}>
+              {error}
+            </MDTypography>
+          )}
+          <MDBox component="form" role="form" onSubmit={handleSubmit}>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                sign in
+              <MDButton variant="gradient" color="info" fullWidth type="submit" disabled={loading}>
+                {loading ? "Signing in..." : "Sign in"}
               </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
       </Card>
-    </BasicLayout>
+    </CleanLayout>
   );
 }
 

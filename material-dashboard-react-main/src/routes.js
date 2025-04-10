@@ -1,8 +1,7 @@
 import Dashboard from "layouts/dashboard";
-import Billing from "layouts/billing";
-import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
+import SignOut from "layouts/authentication/sign-out"; // ستحتاج لإنشاء هذا المكون
 import Companies from "layouts/Companies";
 import JobSeekers from "layouts/JobSeekers";
 import Wilayas from "layouts/Wilayas";
@@ -20,6 +19,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -28,6 +28,7 @@ const routes = [
     icon: <Icon fontSize="small">business</Icon>,
     route: "/companies",
     component: <Companies />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -36,6 +37,7 @@ const routes = [
     icon: <Icon fontSize="small">people</Icon>,
     route: "/jobSeekers",
     component: <JobSeekers />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -44,6 +46,7 @@ const routes = [
     icon: <Icon fontSize="small">map</Icon>,
     route: "/wilayas",
     component: <Wilayas />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -52,6 +55,7 @@ const routes = [
     icon: <Icon fontSize="small">category</Icon>,
     route: "/skillCategories",
     component: <SkillCategories />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -60,22 +64,7 @@ const routes = [
     icon: <Icon fontSize="small">code</Icon>,
     route: "/skills",
     component: <Skills />,
-  },
-  {
-    type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">payments</Icon>,
-    route: "/billing",
-    component: <Billing />,
-  },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications_active</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -84,6 +73,7 @@ const routes = [
     icon: <Icon fontSize="small">account_circle</Icon>,
     route: "/profile",
     component: <Profile />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -92,6 +82,17 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+    protected: false,
+    hideWhenAuth: true, // إضافة خاصية جديدة لإخفاء الزر عند التسجيل
+  },
+  {
+    type: "collapse",
+    name: "Sign Out",
+    key: "sign-out",
+    icon: <Icon fontSize="small">logout</Icon>,
+    route: "/sign-out",
+    component: <SignOut />,
+    protected: true,
   },
 ];
 

@@ -222,14 +222,14 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public IActionResult LogInUser(LogInDTO loginDTO)
+        public ActionResult<UserDTO> LogInUser(LogInDTO loginDTO)
         {
             if (loginDTO == null || string.IsNullOrEmpty(loginDTO.Email) || string.IsNullOrEmpty(loginDTO.Password))
                 return BadRequest("Invalide Data : ");
 
             string PasswordHased = Cryptography.ComputeHash(loginDTO.Password);
 
-            JobBit_Business.User user = JobBit_Business.User.FindBaseUser(loginDTO.Email, loginDTO.Password);
+            JobBit_Business.User user = JobBit_Business.User.FindBaseUser(loginDTO.Email, PasswordHased);
 
             if (user == null || JobSeeker.IsJobSeekerExistByUserID(user.UserID) || Company.IsCompanyExistByUserID(user.UserID))
                 return Unauthorized("Invalid email or password.");
@@ -242,10 +242,10 @@ namespace JobBit.Controllers
             
            
 
-            return Ok(new
-            {
-                userInfo = user.userDTO
-            });
+            return Ok(
+            
+               user.userDTO
+            );
 
         }
 

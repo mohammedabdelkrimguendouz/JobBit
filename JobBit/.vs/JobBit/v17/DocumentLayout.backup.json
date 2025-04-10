@@ -3,6 +3,31 @@
   "WorkspaceRootPath": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|solutionrelative:dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit\\controllers\\jobseekerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|solutionrelative:controllers\\jobseekerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E52D18-CE69-4075-BB31-2D11B947C987}|..\\JobBit_Business\\JobBit_Business.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit_business\\jobseeker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{04D534E1-2130-45CD-AB28-3F08D27F99BE}|..\\JobBit_DataAccess\\JobBit_DataAccess.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit_dataaccess\\skilldata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{04D534E1-2130-45CD-AB28-3F08D27F99BE}|..\\JobBit_DataAccess\\JobBit_DataAccess.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit_dataaccess\\jobseekerdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{41E52D18-CE69-4075-BB31-2D11B947C987}|..\\JobBit_Business\\JobBit_Business.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit_business\\company.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -14,9 +39,6 @@
       "RelativeMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|solutionrelative:controllers\\wilayascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{04D534E1-2130-45CD-AB28-3F08D27F99BE}|..\\JobBit_DataAccess\\JobBit_DataAccess.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit_dataaccess\\skilldata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{04D534E1-2130-45CD-AB28-3F08D27F99BE}|..\\JobBit_DataAccess\\JobBit_DataAccess.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit_dataaccess\\jobdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -24,13 +46,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{41E52D18-CE69-4075-BB31-2D11B947C987}|..\\JobBit_Business\\JobBit_Business.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit_business\\request.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{04D534E1-2130-45CD-AB28-3F08D27F99BE}|..\\JobBit_DataAccess\\JobBit_DataAccess.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit_dataaccess\\jobseekerdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|c:\\users\\guendouz.m.a\\desktop\\memoire project (3-04-2025)\\jobbit\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1AC2137C-0C05-440F-A1C4-0F658ECC991E}|JobBit.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -40,11 +55,64 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AgIAAN0AAAAAAAAAAAAAAOYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T09:34:33.915Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAAAcAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T17:38:08.388Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LogInDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\DTOs\\LogInDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\LogInDTO.cs",
+              "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\DTOs\\LogInDTO.cs",
+              "RelativeToolTip": "DTOs\\LogInDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T04:56:33.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "JobSeekersController.cs",
+              "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\JobSeekersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\JobSeekersController.cs",
+              "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\JobSeekersController.cs",
+              "RelativeToolTip": "Controllers\\JobSeekersController.cs",
+              "ViewState": "AgIAAEYCAAAAAAAAAAAswFsCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T14:47:45.572Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "WilayasController.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\WilayasController.cs",
               "RelativeDocumentMoniker": "Controllers\\WilayasController.cs",
@@ -52,24 +120,23 @@
               "RelativeToolTip": "Controllers\\WilayasController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T18:08:49.875Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T18:08:49.875Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "SkillData.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_DataAccess\\SkillData.cs",
               "RelativeDocumentMoniker": "..\\JobBit_DataAccess\\SkillData.cs",
               "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_DataAccess\\SkillData.cs",
               "RelativeToolTip": "..\\JobBit_DataAccess\\SkillData.cs",
-              "ViewState": "AgIAAKEAAAAAAAAAAAAAAK0AAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T17:21:33.221Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "JobData.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_DataAccess\\JobData.cs",
               "RelativeDocumentMoniker": "..\\JobBit_DataAccess\\JobData.cs",
@@ -81,7 +148,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "CompaniesController.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\CompaniesController.cs",
               "RelativeDocumentMoniker": "Controllers\\CompaniesController.cs",
@@ -89,37 +156,47 @@
               "RelativeToolTip": "Controllers\\CompaniesController.cs",
               "ViewState": "AgIAADkAAAAAAAAAAAAAAEwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T11:44:13.522Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T11:44:13.522Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
+              "Title": "JobSeeker.cs",
+              "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_Business\\JobSeeker.cs",
+              "RelativeDocumentMoniker": "..\\JobBit_Business\\JobSeeker.cs",
+              "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_Business\\JobSeeker.cs",
+              "RelativeToolTip": "..\\JobBit_Business\\JobSeeker.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAYwJgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T14:45:18.081Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Company.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_Business\\Company.cs",
               "RelativeDocumentMoniker": "..\\JobBit_Business\\Company.cs",
               "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_Business\\Company.cs",
               "RelativeToolTip": "..\\JobBit_Business\\Company.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAADwvyUAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAADwvwoAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T11:42:56.186Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T11:42:56.186Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "JobSeekerData.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_DataAccess\\JobSeekerData.cs",
               "RelativeDocumentMoniker": "..\\JobBit_DataAccess\\JobSeekerData.cs",
               "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_DataAccess\\JobSeekerData.cs",
               "RelativeToolTip": "..\\JobBit_DataAccess\\JobSeekerData.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAYwFMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-07T11:31:56.874Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "Request.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_Business\\Request.cs",
               "RelativeDocumentMoniker": "..\\JobBit_Business\\Request.cs",
@@ -131,7 +208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "RequestData.cs",
               "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit_DataAccess\\RequestData.cs",
               "RelativeDocumentMoniker": "..\\JobBit_DataAccess\\RequestData.cs",
@@ -140,18 +217,6 @@
               "ViewState": "AgIAADQAAAAAAAAAAAAvwEAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-07T11:19:48.388Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Guendouz.M.A\\Desktop\\Memoire Project (3-04-2025)\\JobBit\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAuwG4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T09:34:33.915Z"
             }
           ]
         }

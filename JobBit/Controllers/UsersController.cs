@@ -15,7 +15,7 @@ namespace JobBit.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult UpdateUser(UserDTO updateUserDTO)
+        public ActionResult<UserDTO> UpdateUser(UserDTO updateUserDTO)
         {
             if (updateUserDTO == null || updateUserDTO.UserID < 1)
             {
