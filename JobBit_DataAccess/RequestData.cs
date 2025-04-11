@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -10,6 +11,7 @@ using Microsoft.Data.SqlClient;
 
 namespace JobBit_DataAccess
 {
+    
     public class RequestDTO
     {
         public int RequestID { get; set; }
@@ -31,33 +33,41 @@ namespace JobBit_DataAccess
 
     public class ApplicantForCompanyJobDTO
     {
-        public int CompanyID { get; set; }
-        public int JobID { get; set; }
-        public int JobSeekerID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string? WilayaName { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        public byte Gender { get; set; }
-        public string? LinkProfileLinkden { get; set; }
-        public string? LinkProfileGithub { get; set; }
-        public DateTime RequestDate { get; set; }
+        public int RequestID { get; set; }
+        public DateTime PostedDate{ get; set; }
+        public string JobTitle { get; set; }
+        public bool? Status { get; set; }
+        public string StatusAsText { get; set; }
 
-        public ApplicantForCompanyJobDTO(int companyID, int jobID, int jobSeekerID, string firstName, string lastName,
-                              string? wilayaName, DateTime? dateOfBirth, byte gender,
-                              string? linkProfileLinkden, string? linkProfileGithub, DateTime requestDate)
+        public ApplicantForCompanyJobDTO(int requestID, DateTime postedDate, string jobTitle, bool? status,string statusAsText)
         {
-            CompanyID = companyID;
-            JobID = jobID;
+            RequestID = requestID;
+            PostedDate = postedDate;
+            JobTitle = jobTitle;
+            Status = status;
+            StatusAsText = statusAsText;
+        }
+    }
+
+    public class JobSeekerApplications
+    {
+        public int JobSeekerID { get; set; }
+        public int JobID { get; set; }
+        public string JobOffer {  get; set; }
+        public DateTime AppliedOn { get; set; }
+
+        public string Company { get; set; }
+        public bool? Status { get; set; }
+
+        public JobSeekerApplications(int jobSeekerID, int jobID, string jobOffer,
+            DateTime appliedOn, string company, bool? status)
+        {
             JobSeekerID = jobSeekerID;
-            FirstName = firstName;
-            LastName = lastName;
-            WilayaName = wilayaName;
-            DateOfBirth = dateOfBirth;
-            Gender = gender;
-            LinkProfileLinkden = linkProfileLinkden;
-            LinkProfileGithub = linkProfileGithub;
-            RequestDate = requestDate;
+            JobID = jobID;
+            JobOffer = jobOffer;
+            AppliedOn = appliedOn;
+            Company = company;
+            Status = status;
         }
     }
 
@@ -79,19 +89,15 @@ namespace JobBit_DataAccess
                         {
                             while (Reader.Read())
                             {
+                                bool? Status = Reader.IsDBNull(Reader.GetOrdinal("Status")) ? null : Reader.GetBoolean(Reader.GetOrdinal("Status"));
                                 applicantForCompanyJob.Add(
                                     new ApplicantForCompanyJobDTO(
-                                        Reader.GetInt32(Reader.GetOrdinal("CompanyID")),
-Reader.GetInt32(Reader.GetOrdinal("JobID")),
-Reader.GetInt32(Reader.GetOrdinal("JobSeekerID")),
-Reader.GetString(Reader.GetOrdinal("FirstName")),
-Reader.GetString(Reader.GetOrdinal("LastName")),
-Reader.IsDBNull(Reader.GetOrdinal("WilayaName")) ? null : Reader.GetString(Reader.GetOrdinal("WilayaName")),
-Reader.IsDBNull(Reader.GetOrdinal("DateOfBirth")) ? null : Reader.GetDateTime(Reader.GetOrdinal("DateOfBirth")),
-Reader.GetByte(Reader.GetOrdinal("Gender")),
-Reader.IsDBNull(Reader.GetOrdinal("LinkProfileLinkden")) ? null : Reader.GetString(Reader.GetOrdinal("LinkProfileLinkden")),
-Reader.IsDBNull(Reader.GetOrdinal("LinkProfileGithub")) ? null : Reader.GetString(Reader.GetOrdinal("LinkProfileGithub")),
-Reader.GetDateTime(Reader.GetOrdinal("RequestDate"))
+                                        Reader.GetInt32(Reader.GetOrdinal("RequestID")),
+                                        Reader.GetDateTime(Reader.GetOrdinal("PostedDate")),
+                                        Reader.GetString(Reader.GetOrdinal("Title")),
+                                        Status,
+                                        (Status == null) ? "Pending Job Offer" : (Status == true) ? "Accepted Job Offer" :
+                                        "Rejected Job Offer"
 )
                                  );
                                     
@@ -110,6 +116,50 @@ Reader.GetDateTime(Reader.GetOrdinal("RequestDate"))
             return applicantForCompanyJob;
 
         }
+
+        public static List<JobSeekerApplications> GetAllJobSeekerApplications(int JobSeekerID)
+        {
+            List<JobSeekerApplications> jobSeekerApplications = new List<JobSeekerApplications>();
+            try
+            {
+                using (SqlConnection Connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    Connection.Open();
+                    using (SqlCommand Command = new SqlCommand("SP_GetAllJobSeekerApplications", Connection))
+                    {
+                        Command.CommandType = CommandType.StoredProcedure;
+                        Command.Parameters.AddWithValue("@JobSeekerID", JobSeekerID);
+                        using (SqlDataReader Reader = Command.ExecuteReader())
+                        {
+                            while (Reader.Read())
+                            {
+                                jobSeekerApplications.Add(
+                                    new JobSeekerApplications(
+                                        Reader.GetInt32(Reader.GetOrdinal("JobSeekerID")),
+Reader.GetInt32(Reader.GetOrdinal("JobID")),
+Reader.GetString(Reader.GetOrdinal("JobOffer")),
+Reader.GetDateTime(Reader.GetOrdinal("AppliedOn")),
+Reader.GetString(Reader.GetOrdinal("Company")),
+Reader.IsDBNull(Reader.GetOrdinal("Status")) ? null : Reader.GetBoolean(Reader.GetOrdinal("Status"))
+)
+                                 );
+
+
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                clsEventLogData.WriteEvent($" Message : {Ex.Message} \n\n Source : {Ex.Source} \n\n Target Site :  {Ex.TargetSite} \n\n Stack Trace :  {Ex.StackTrace}", EventLogEntryType.Error);
+
+            }
+            return jobSeekerApplications;
+
+        }
+
         public static int AddNewRequest(RequestDTO requestDTO)
         {
             int RequestID = -1;

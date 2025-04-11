@@ -120,7 +120,7 @@ function Overview() {
           mt={5}
           mb={4}
           sx={{
-            background: "linear-gradient(195deg, #49a3f1, #1A73E8)",
+            background: "linear-gradient(195deg, #36305E, #36305E)",
             borderRadius: "12px",
             padding: "2rem 1rem",
             boxShadow: "0 4px 20px 0 rgba(0,0,0,0.14)",
@@ -160,7 +160,7 @@ function Overview() {
                       fontWeight="bold"
                       mb={4}
                       textAlign="center"
-                      color="primary"
+                      color="#36305E"
                     >
                       Edit Profile Information
                     </MDTypography>
@@ -319,13 +319,13 @@ function Overview() {
                           padding: "10px 24px",
                           borderRadius: "8px",
                           border: "none",
-                          background: "linear-gradient(195deg, #49a3f1, #1A73E8)",
+                          background: "linear-gradient(195deg, #36305E, #36305E)",
                           color: "white",
                           cursor: "pointer",
                           fontWeight: "500",
                           fontSize: "0.875rem",
                           transition: "all 0.2s ease",
-                          boxShadow: "0 4px 10px rgba(26, 115, 232, 0.3)",
+                          boxShadow: "0 4px 10px rgba(54, 48, 94, 0.3)",
                         }}
                       >
                         Save Changes
@@ -339,7 +339,7 @@ function Overview() {
                       fontWeight="bold"
                       mb={4}
                       textAlign="center"
-                      color="primary"
+                      color="#36305E"
                     >
                       Profile Information
                     </MDTypography>
@@ -426,16 +426,16 @@ function Overview() {
                           padding: "12px 32px",
                           borderRadius: "8px",
                           border: "none",
-                          background: "linear-gradient(195deg, #49a3f1, #1A73E8)",
+                          background: "linear-gradient(195deg, #36305E, #36305E)",
                           color: "white",
                           cursor: "pointer",
                           fontWeight: "500",
                           fontSize: "0.875rem",
                           transition: "all 0.2s ease",
-                          boxShadow: "0 4px 10px rgba(26, 115, 232, 0.3)",
+                          boxShadow: "0 4px 10px rgba(54, 48, 94, 0.3)",
                           "&:hover": {
                             transform: "translateY(-2px)",
-                            boxShadow: "0 6px 18px rgba(26, 115, 232, 0.4)",
+                            boxShadow: "0 6px 18px rgba(54, 48, 94, 0.4)",
                           },
                         }}
                       >

@@ -1996,6 +1996,42 @@
   },
   {
     "ContainingType": "JobBit.Controllers.JobSeekersController",
+    "Method": "GetAllJobSeekerApplications",
+    "RelativePath": "api/JobSeekers/GetAllJobSeekerApplications/{JobSeekerID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "JobSeekerID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[JobBit_DataAccess.JobSeekerApplications, JobBit_DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ],
+    "EndpointName": "GetAllJobSeekerApplications"
+  },
+  {
+    "ContainingType": "JobBit.Controllers.JobSeekersController",
     "Method": "GetAllJobSeekers",
     "RelativePath": "api/JobSeekers/GetAllJobSeekers",
     "HttpMethod": "GET",
@@ -2771,6 +2807,51 @@
     "EndpointName": "UploadJobSeekerImage"
   },
   {
+    "ContainingType": "JobBit.Controllers.RequestsController",
+    "Method": "GetRequestByID",
+    "RelativePath": "api/Requests/GetRequestByID/{RequestID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "RequestID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "JobBit_Business.Request\u002BAllRequestInfo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ],
+    "EndpointName": "GetRequestByID"
+  },
+  {
     "ContainingType": "JobBit.Controllers.SkillCategoriesController",
     "Method": "AddSkillCategory",
     "RelativePath": "api/SkillCategories/AddSkillCategory",
@@ -3527,8 +3608,12 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
+        "Type": "JobBit_DataAccess.UserDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "StatusCode": 200
       },
       {

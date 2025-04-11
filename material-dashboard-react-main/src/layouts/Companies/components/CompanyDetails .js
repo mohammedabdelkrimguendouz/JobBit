@@ -49,7 +49,7 @@ const styles = {
     zIndex: 1,
   },
   title: {
-    color: "#1a73e8",
+    color: "#36305E",
     display: "flex",
     alignItems: "center",
     gap: 1,
@@ -88,7 +88,7 @@ const styles = {
       left: 0,
       width: "60px",
       height: "3px",
-      background: "#1a73e8",
+      background: "#36305E",
       bottom: "-1px",
     },
   },
@@ -112,14 +112,14 @@ const styles = {
     marginBottom: 0.5,
   },
   link: {
-    color: "#4285f4",
+    color: "#36305E",
     textDecoration: "none",
     "&:hover": {
       textDecoration: "underline",
     },
   },
   icon: {
-    color: "#1a73e8",
+    color: "#36305E",
     fontSize: "small",
   },
   description: {
@@ -130,8 +130,8 @@ const styles = {
     color: "#202124",
   },
   locationChip: {
-    backgroundColor: "rgba(66, 133, 244, 0.1)",
-    color: "#1a73e8",
+    backgroundColor: "rgba(54, 48, 94, 0.1)",
+    color: "#36305E",
     fontWeight: 500,
   },
   activeStatus: {
@@ -145,7 +145,7 @@ const styles = {
   sectionTitle: {
     marginTop: 3,
     marginBottom: 2,
-    color: "#1a73e8",
+    color: "#36305E",
     fontWeight: 600,
     fontSize: "1rem",
     display: "flex",
@@ -156,15 +156,15 @@ const styles = {
 
 // Colors object for consistent theming
 const colors = {
-  primary: "#1a73e8",
+  primary: "#36305E",
   secondary: "#f5f5f5",
-  accent: "#4285f4",
+  accent: "#36305E",
   success: "#34a853",
   error: "#ea4335",
   text: "#202124",
   lightText: "#5f6368",
   divider: "rgba(0, 0, 0, 0.12)",
-  gradientStart: "#4285f4",
+  gradientStart: "#36305E",
   gradientEnd: "#34a853",
 };
 

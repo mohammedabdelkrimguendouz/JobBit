@@ -95,7 +95,7 @@ const styles = {
     zIndex: 1,
   },
   title: {
-    color: "#1a73e8",
+    color: "#36305E",
     display: "flex",
     alignItems: "center",
     gap: 1,
@@ -133,7 +133,7 @@ const styles = {
       left: 0,
       width: "60px",
       height: "3px",
-      background: "#1a73e8",
+      background: "#36305E", // كان #1a73e8
       bottom: "-1px",
     },
   },
@@ -159,7 +159,7 @@ const styles = {
   sectionTitle: {
     marginTop: 3,
     marginBottom: 2,
-    color: "#1a73e8",
+    color: "#36305E",
     fontWeight: 600,
     fontSize: "1rem",
     display: "flex",
@@ -248,7 +248,6 @@ const JobSeekerDetails = ({ jobSeeker, isOpen, onClose }) => {
           <Divider sx={styles.divider} />
         </Box>
 
-        {/* الجزء القابل للتمرير */}
         <Box sx={styles.scrollableContent}>
           <Box sx={styles.infoContainer}>
             {/* Basic Info */}
@@ -283,7 +282,7 @@ const JobSeekerDetails = ({ jobSeeker, isOpen, onClose }) => {
                 <Box sx={styles.fieldContainer}>
                   <Typography sx={styles.fieldLabel}>Location:</Typography>
                   <Typography sx={styles.fieldValue}>
-                    {jobSeeker.wilayaInfo.name || "N/A"}
+                    {jobSeeker.wilayaInfo?.name || "N/A"}
                   </Typography>
                 </Box>
               </Grid>
@@ -297,13 +296,13 @@ const JobSeekerDetails = ({ jobSeeker, isOpen, onClose }) => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Box sx={styles.fieldContainer}>
-                  <EmailIcon fontSize="small" sx={{ color: "#1a73e8" }} />
+                  <EmailIcon fontSize="small" sx={{ color: "#36305E" }} />
                   <Typography sx={styles.fieldValue}>{jobSeeker.email || "N/A"}</Typography>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Box sx={styles.fieldContainer}>
-                  <PhoneIcon fontSize="small" sx={{ color: "#1a73e8" }} />
+                  <PhoneIcon fontSize="small" sx={{ color: "#36305E" }} />
                   <Typography sx={styles.fieldValue}>{jobSeeker.phone || "N/A"}</Typography>
                 </Box>
               </Grid>
@@ -363,26 +362,6 @@ const JobSeekerDetails = ({ jobSeeker, isOpen, onClose }) => {
                     </Tooltip>
                   ))}
                 </Box>
-              </>
-            )}
-
-            {/* Bio Section */}
-            {jobSeeker.bio && (
-              <>
-                <Typography sx={{ ...styles.sectionTitle, mt: 4 }}>
-                  <DescriptionIcon fontSize="small" />
-                  About
-                </Typography>
-                <Typography
-                  sx={{
-                    p: 2,
-                    borderRadius: 1,
-                    backgroundColor: "rgba(0, 0, 0, 0.02)",
-                    border: "1px solid rgba(0, 0, 0, 0.05)",
-                  }}
-                >
-                  {jobSeeker.bio}
-                </Typography>
               </>
             )}
           </Box>

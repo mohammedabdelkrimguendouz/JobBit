@@ -62,15 +62,17 @@ function Basic() {
     <CleanLayout image={bgImage}>
       <Card>
         <MDBox
-          variant="gradient"
-          bgColor="info"
-          borderRadius="lg"
-          coloredShadow="info"
           mx={2}
           mt={-3}
           p={2}
           mb={1}
           textAlign="center"
+          variant="gradient"
+          sx={{
+            background: "linear-gradient(135deg, #36305E, #5A4E8C)",
+            borderRadius: "lg",
+            coloredShadow: "info",
+          }}
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
@@ -104,7 +106,18 @@ function Basic() {
               />
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth type="submit" disabled={loading}>
+              <MDButton
+                variant="gradient"
+                fullWidth
+                type="submit"
+                disabled={loading}
+                sx={{
+                  background: "linear-gradient(195deg, #36305E, #36305E)",
+                  "&:hover": {
+                    background: "linear-gradient(195deg, #2a254a, #2a254a)",
+                  },
+                }}
+              >
                 {loading ? "Signing in..." : "Sign in"}
               </MDButton>
             </MDBox>

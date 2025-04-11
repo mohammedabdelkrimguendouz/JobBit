@@ -28,6 +28,25 @@ namespace JobBit.Controllers
         }
 
 
+        [HttpGet("GetAllJobSeekerApplications/{JobSeekerID}", Name = "GetAllJobSeekerApplications")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<IEnumerable<JobSeekerApplications>> GetAllJobSeekerApplications(int JobSeekerID)
+        {
+            if(JobSeekerID<1)
+                return BadRequest(new { message = "Invalid JobSeeker ID", JobSeekerID });
+
+
+
+
+            List<JobSeekerApplications> jobSeekerApplications = JobSeeker.GetAllJobSeekerApplications(JobSeekerID);
+
+            
+
+            return Ok(jobSeekerApplications);
+        }
+
+
 
         [HttpGet("GetJobSeekerByID/{JobSeekerID}", Name = "GetJobSeekerByID")]
         [ProducesResponseType(StatusCodes.Status200OK)]

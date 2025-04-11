@@ -93,6 +93,27 @@ function DataTable({
       key={option}
       onClick={() => gotoPage(Number(option))}
       active={pageIndex === option}
+      sx={{
+        backgroundColor: pageIndex === option ? "#36305E !important" : "#fff !important",
+        color: pageIndex === option ? "#fff !important" : "#666 !important",
+        "&:hover": {
+          backgroundColor: pageIndex === option ? "#36305E !important" : "#f5f5f5 !important",
+        },
+        "&&": {
+          backgroundColor: pageIndex === option ? "#36305E !important" : "#fff !important",
+        },
+        border: "none !important",
+        borderRadius: "4px !important",
+        margin: "0 2px !important",
+        minWidth: "30px !important",
+        height: "30px !important",
+        display: "flex !important",
+        alignItems: "center !important",
+        justifyContent: "center !important",
+        cursor: "pointer !important",
+        transition: "all 300ms ease !important",
+        boxShadow: "0 2px 4px 0 rgba(0,0,0,0.1) !important",
+      }}
     >
       {option + 1}
     </MDPagination>
@@ -238,11 +259,38 @@ function DataTable({
         )}
         {pageOptions.length > 1 && (
           <MDPagination
-            variant={pagination.variant ? pagination.variant : "gradient"}
-            color={pagination.color ? pagination.color : "info"}
+            variant="contained"
+            color="dark"
+            sx={{
+              "& .MuiPaginationItem-root": {
+                border: "none !important",
+                backgroundColor: "transparent !important",
+              },
+            }}
           >
             {canPreviousPage && (
-              <MDPagination item onClick={() => previousPage()}>
+              <MDPagination
+                item
+                onClick={() => previousPage()}
+                sx={{
+                  backgroundColor: "#fff !important",
+                  color: "#666 !important",
+                  "&:hover": {
+                    backgroundColor: "#f5f5f5 !important",
+                  },
+                  border: "none !important",
+                  borderRadius: "4px !important",
+                  margin: "0 2px !important",
+                  minWidth: "30px !important",
+                  height: "30px !important",
+                  display: "flex !important",
+                  alignItems: "center !important",
+                  justifyContent: "center !important",
+                  cursor: "pointer !important",
+                  transition: "all 300ms ease !important",
+                  boxShadow: "0 2px 4px 0 rgba(0,0,0,0.1) !important",
+                }}
+              >
                 <Icon sx={{ fontWeight: "bold" }}>chevron_left</Icon>
               </MDPagination>
             )}
@@ -258,7 +306,28 @@ function DataTable({
               renderPagination
             )}
             {canNextPage && (
-              <MDPagination item onClick={() => nextPage()}>
+              <MDPagination
+                item
+                onClick={() => nextPage()}
+                sx={{
+                  backgroundColor: "#fff !important",
+                  color: "#666 !important",
+                  "&:hover": {
+                    backgroundColor: "#f5f5f5 !important",
+                  },
+                  border: "none !important",
+                  borderRadius: "4px !important",
+                  margin: "0 2px !important",
+                  minWidth: "30px !important",
+                  height: "30px !important",
+                  display: "flex !important",
+                  alignItems: "center !important",
+                  justifyContent: "center !important",
+                  cursor: "pointer !important",
+                  transition: "all 300ms ease !important",
+                  boxShadow: "0 2px 4px 0 rgba(0,0,0,0.1) !important",
+                }}
+              >
                 <Icon sx={{ fontWeight: "bold" }}>chevron_right</Icon>
               </MDPagination>
             )}
@@ -274,7 +343,7 @@ DataTable.defaultProps = {
   entriesPerPage: { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
   canSearch: false,
   showTotalEntries: true,
-  pagination: { variant: "gradient", color: "info" },
+  pagination: { variant: "contained", color: "dark" },
   isSorted: true,
   noEndBorder: false,
 };

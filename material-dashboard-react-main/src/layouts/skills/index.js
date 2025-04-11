@@ -278,9 +278,11 @@ function Skills() {
                   py={3}
                   px={2}
                   variant="gradient"
-                  bgColor="info"
-                  borderRadius="lg"
-                  coloredShadow="info"
+                  sx={{
+                    background: "linear-gradient(135deg, #36305E, #5A4E8C)",
+                    borderRadius: "lg",
+                    coloredShadow: "info",
+                  }}
                 >
                   <MDTypography variant="h6" color="white">
                     Skills ({filteredRows.length})
@@ -340,10 +342,28 @@ function Skills() {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenModal(false)} color="secondary">
+          <Button
+            onClick={() => setOpenModal(false)}
+            sx={{
+              color: "#36305E",
+              "&:hover": {
+                color: "#36305E",
+                backgroundColor: "transparent",
+              },
+            }}
+          >
             Cancel
           </Button>
-          <Button onClick={handleSave} color="primary" variant="contained">
+          <Button
+            onClick={handleSave}
+            variant="contained"
+            sx={{
+              backgroundColor: "#36305E",
+              "&:hover": {
+                backgroundColor: "#2a254d",
+              },
+            }}
+          >
             Save
           </Button>
         </DialogActions>

@@ -288,6 +288,13 @@ namespace JobBit_Business
             return Request.IsJobSeekerApplyedForJob(JobSeekerID, JobID);
         }
 
-
+        public static List<JobSeekerApplications> GetAllJobSeekerApplications(int JobSeekerID)
+        {
+            return Request.GetAllJobSeekerApplications(JobSeekerID);
+        }
+        public  List<JobSeekerApplications> GetAllApplications()
+        {
+            return Request.GetAllJobSeekerApplications(JobSeekerID);
+        }
     }
 }

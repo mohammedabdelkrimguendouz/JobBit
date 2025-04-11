@@ -198,9 +198,11 @@ function SkillCategories() {
                   py={3}
                   px={2}
                   variant="gradient"
-                  bgColor="info"
-                  borderRadius="lg"
-                  coloredShadow="info"
+                  sx={{
+                    background: "linear-gradient(135deg, #36305E, #5A4E8C)",
+                    borderRadius: "lg",
+                    coloredShadow: "info",
+                  }}
                 >
                   <MDTypography variant="h6" color="white">
                     Skill Categories ({rows.length})
@@ -232,8 +234,28 @@ function SkillCategories() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
-            <Button onClick={handleSave} color="primary">
+            <Button
+              onClick={() => setOpenDialog(false)}
+              sx={{
+                color: "#36305E",
+                "&:hover": {
+                  color: "#36305E",
+                  backgroundColor: "transparent",
+                },
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSave}
+              variant="contained"
+              sx={{
+                backgroundColor: "#36305E",
+                "&:hover": {
+                  backgroundColor: "#2a254d",
+                },
+              }}
+            >
               Save
             </Button>
           </DialogActions>

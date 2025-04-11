@@ -3279,6 +3279,76 @@
         }
       }
     },
+    "/api/JobSeekers/GetAllJobSeekerApplications/{JobSeekerID}": {
+      "get": {
+        "tags": [
+          "JobSeekers"
+        ],
+        "operationId": "GetAllJobSeekerApplications",
+        "parameters": [
+          {
+            "name": "JobSeekerID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobSeekerApplications"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobSeekerApplications"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobSeekerApplications"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/JobSeekers/GetJobSeekerByID/{JobSeekerID}": {
       "get": {
         "tags": [
@@ -4948,6 +5018,87 @@
         }
       }
     },
+    "/api/Requests/GetRequestByID/{RequestID}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "operationId": "GetRequestByID",
+        "parameters": [
+          {
+            "name": "RequestID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllRequestInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllRequestInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllRequestInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/SkillCategories/GetAllSkillCategories": {
       "get": {
         "tags": [
@@ -6292,7 +6443,24 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
           },
           "409": {
             "description": "Conflict",
@@ -7096,6 +7264,30 @@
         },
         "additionalProperties": false
       },
+      "AllRequestInfo": {
+        "type": "object",
+        "properties": {
+          "requestID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jobSeekerInfo": {
+            "$ref": "#/components/schemas/AllJobSeekerInfo"
+          },
+          "jobInfo": {
+            "$ref": "#/components/schemas/AllJobInfoDTO"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AllSkillInfo": {
         "type": "object",
         "properties": {
@@ -7134,50 +7326,25 @@
       "ApplicantForCompanyJobDTO": {
         "type": "object",
         "properties": {
-          "companyID": {
+          "requestID": {
             "type": "integer",
             "format": "int32"
           },
-          "jobID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "jobSeekerID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "wilayaName": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "gender": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "linkProfileLinkden": {
-            "type": "string",
-            "nullable": true
-          },
-          "linkProfileGithub": {
-            "type": "string",
-            "nullable": true
-          },
-          "requestDate": {
+          "postedDate": {
             "type": "string",
             "format": "date-time"
+          },
+          "jobTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "statusAsText": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -7408,6 +7575,36 @@
             "items": {
               "$ref": "#/components/schemas/SkillDTO"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobSeekerApplications": {
+        "type": "object",
+        "properties": {
+          "jobSeekerID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jobID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jobOffer": {
+            "type": "string",
+            "nullable": true
+          },
+          "appliedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "company": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean",
             "nullable": true
           }
         },

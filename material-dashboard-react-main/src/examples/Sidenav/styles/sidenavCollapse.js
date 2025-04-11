@@ -1,17 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 function collapseItem(theme, ownerState) {
   const { palette, transitions, breakpoints, boxShadows, borders, functions } = theme;
   const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = ownerState;
@@ -23,7 +9,7 @@ function collapseItem(theme, ownerState) {
 
   return {
     background: active
-      ? linearGradient(gradients[sidenavColor].main, gradients[sidenavColor].state)
+      ? "#36305E" // اللون النشط
       : transparent.main,
     color:
       (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
@@ -87,13 +73,13 @@ function collapseIconBox(theme, ownerState) {
     }),
 
     "& svg, svg g": {
-      color: transparentSidenav || whiteSidenav ? dark.main : white.main,
+      color: active ? "#36305E" : transparentSidenav || whiteSidenav ? dark.main : white.main, // تغيير اللون عند التفعيل
     },
   };
 }
 
 const collapseIcon = ({ palette: { white, gradients } }, { active }) => ({
-  color: active ? white.main : gradients.dark.state,
+  color: active ? "#36305E" : gradients.dark.state, // تغيير اللون عند التفعيل
 });
 
 function collapseText(theme, ownerState) {
@@ -120,6 +106,7 @@ function collapseText(theme, ownerState) {
       fontWeight: active ? fontWeightRegular : fontWeightLight,
       fontSize: size.sm,
       lineHeight: 0,
+      color: active ? "#FFFFFF" : "inherit", // تغيير لون النص إلى الأبيض عند التفعيل
     },
   };
 }

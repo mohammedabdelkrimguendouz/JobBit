@@ -271,9 +271,11 @@ function JobSeekers() {
                   py={3}
                   px={2}
                   variant="gradient"
-                  bgColor="info"
-                  borderRadius="lg"
-                  coloredShadow="info"
+                  sx={{
+                    background: "linear-gradient(135deg, #36305E, #5A4E8C)",
+                    borderRadius: "lg",
+                    coloredShadow: "info",
+                  }}
                 >
                   <MDTypography variant="h6" color="white">
                     Job Seekers ({filteredRows.length})
